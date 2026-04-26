@@ -174,6 +174,7 @@ button:focus-visible {
   letter-spacing: -0.02em;
   font-family: var(--font-display);
   font-size: 1.15rem;
+  white-space: nowrap;
 }
 
 .logo .logo-dot {
@@ -194,6 +195,13 @@ nav ul {
   gap: 1.2rem;
   color: var(--text-muted);
   font-weight: 500;
+}
+
+@media (max-width: 920px) {
+  nav ul {
+    gap: 0.8rem;
+    font-size: 0.92rem;
+  }
 }
 
 nav a {
