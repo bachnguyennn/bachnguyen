@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
   title: string;
@@ -50,54 +51,67 @@ const imageURL = new URL(image, Astro.site ?? canonicalURL).toString();
         }
       })();
     </script>
+
+    <ClientRouter />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
     <slot />
 
     <script>
-      const reveals = document.querySelectorAll('.reveal');
-      if ('IntersectionObserver' in window && reveals.length) {
-        const io = new IntersectionObserver(
-          (entries) => {
-            for (const entry of entries) {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                io.unobserve(entry.target);
-              }
-            }
-          },
-          { rootMargin: '0px 0px -10% 0px', threshold: 0.08 },
-        );
-        reveals.forEach((el) => io.observe(el));
-      } else {
-        reveals.forEach((el) => el.classList.add('is-visible'));
-      }
-
-      const themeToggle = document.querySelector('[data-theme-toggle]');
-      themeToggle?.addEventListener('click', () => {
-        const root = document.documentElement;
-        const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        root.setAttribute('data-theme', next);
+      function initPage() {
         try {
-          localStorage.setItem('theme', next);
+          const stored = localStorage.getItem('theme');
+          if (stored) document.documentElement.setAttribute('data-theme', stored);
         } catch (e) {
           /* ignore */
         }
-      });
 
-      const menuBtn = document.querySelector('[data-menu-toggle]');
-      const navEl = document.querySelector('[data-primary-nav]');
-      menuBtn?.addEventListener('click', () => {
-        const open = navEl?.classList.toggle('is-open');
-        menuBtn.setAttribute('aria-expanded', String(Boolean(open)));
-      });
-      navEl?.querySelectorAll('a').forEach((a) => {
-        a.addEventListener('click', () => {
-          navEl.classList.remove('is-open');
-          menuBtn?.setAttribute('aria-expanded', 'false');
+        const reveals = document.querySelectorAll('.reveal');
+        if ('IntersectionObserver' in window && reveals.length) {
+          const io = new IntersectionObserver(
+            (entries) => {
+              for (const entry of entries) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('is-visible');
+                  io.unobserve(entry.target);
+                }
+              }
+            },
+            { rootMargin: '0px 0px -10% 0px', threshold: 0.08 },
+          );
+          reveals.forEach((el) => io.observe(el));
+        } else {
+          reveals.forEach((el) => el.classList.add('is-visible'));
+        }
+
+        const themeToggle = document.querySelector('[data-theme-toggle]');
+        themeToggle?.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          try {
+            localStorage.setItem('theme', next);
+          } catch (e) {
+            /* ignore */
+          }
         });
-      });
+
+        const menuBtn = document.querySelector('[data-menu-toggle]');
+        const navEl = document.querySelector('[data-primary-nav]');
+        menuBtn?.addEventListener('click', () => {
+          const open = navEl?.classList.toggle('is-open');
+          menuBtn.setAttribute('aria-expanded', String(Boolean(open)));
+        });
+        navEl?.querySelectorAll('a').forEach((a) => {
+          a.addEventListener('click', () => {
+            navEl.classList.remove('is-open');
+            menuBtn?.setAttribute('aria-expanded', 'false');
+          });
+        });
+      }
+
+      document.addEventListener('astro:page-load', initPage);
     </script>
   </body>
 </html>
