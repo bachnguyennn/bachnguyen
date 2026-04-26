@@ -7,4 +7,7 @@ export default defineConfig({
   site,
   base,
   output: 'static',
+  build: {
+    inlineStylesheets: 'always',
+  },
 });
