@@ -14,12 +14,3 @@ npm run dev
 ```bash
 npm run build
 ```
-
-## Content editing
-
-- Projects: `src/content/projects/*.md`
-- Blog posts: `src/content/blog/*.md`
-
-## Resume
-
-Add your PDF resume at `public/resume.pdf`.
