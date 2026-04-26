@@ -6,8 +6,8 @@ period: "2025 - Present"
 domain: ml
 domainLabel: "Machine Learning"
 tags: ["NLP", "Model Architecture", "Optimization"]
-featured: true
-order: 1
+featured: false
+order: 3
 github: "https://github.com/bach"
 ---
 

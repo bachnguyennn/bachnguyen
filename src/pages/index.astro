@@ -24,16 +24,16 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 const href = (path: string) => `${basePath}${path}`;
 
 const skillGroups = [
-  { id: 'languages', label: 'Languages', items: ['Python', 'TypeScript', 'SQL', 'C++'] },
-  { id: 'ml', label: 'Machine Learning', items: ['PyTorch', 'scikit-learn', 'Hugging Face', 'XGBoost'] },
-  { id: 'data', label: 'Data', items: ['pandas', 'NumPy', 'PostgreSQL', 'DuckDB'] },
-  { id: 'tooling', label: 'Tooling', items: ['Git', 'Docker', 'GitHub Actions', 'AWS'] },
+  { id: 'languages', label: 'Languages', items: ['Python', 'Java', 'C++', 'SQL', 'Bash', 'R'] },
+  { id: 'data', label: 'Data Engineering & Analysis', items: ['ETL Pipelines', 'pandas', 'NumPy', 'scikit-learn', 'Matplotlib', 'Folium'] },
+  { id: 'tooling', label: 'Developer Tools', items: ['Azure Cloud', 'Docker', 'Apache Airflow', 'Power Apps', 'Power Automate', 'Jupyter'] },
+  { id: 'databases', label: 'Databases & Scraping', items: ['MySQL', 'SQLite', 'IBM DB2', 'BeautifulSoup', 'Web Scraping'] },
 ];
 ---
 
 <BaseLayout
   title="Bach | Data Scientist"
-  description="Student data scientist building practical machine learning and analytics projects."
+  description="Bach Nguyen is an Integrated Mathematics and Computer Science student building data engineering, analytics, and machine learning projects."
 >
   <Header />
   <main id="main-content" class="container">
@@ -44,7 +44,8 @@ const skillGroups = [
           <h1>Hi, I&apos;m Bach</h1>
           <p class="kicker">Student Data Scientist</p>
           <p class="lead">
-            Welcome to my personal websites, feel free to check out some of my projects or contact me for a chat!!
+            Integrated Mathematics and Computer Science student at Ontario Tech University, focused
+            on data engineering, analytics, cloud workflows, and practical machine learning systems.
           </p>
         </div>
       </div>
@@ -66,7 +67,10 @@ const skillGroups = [
       </header>
       <div class="card">
         <p>
-          I’m a student data scientist passionate about turning complex datasets into actionable strategy. I specialize in machine learning and model optimization, building everything from exploratory research models to production-ready pipelines.
+          I am a student data scientist studying Integrated Mathematics and Computer Science at
+          Ontario Tech University. I enjoy building practical tools that turn messy data into
+          reliable analysis, from cloud data pipelines and scraping workflows to financial modeling
+          and automation systems.
         </p>
       </div>
     </section>
@@ -130,18 +134,49 @@ const skillGroups = [
       </div>
     </section>
 
+    <section class="section reveal" id="education">
+      <header class="section-header">
+        <p class="kicker">// Education</p>
+        <h2>Education</h2>
+      </header>
+      <article class="card">
+        <h3>Ontario Tech University</h3>
+        <p class="meta">Bachelor of Science in Integrated Mathematics and Computer Science</p>
+        <p class="meta">Oshawa, ON • Sep. 2023 - Apr. 2027</p>
+        <p class="meta">Cumulative GPA: 3.77 / 4.3</p>
+      </article>
+    </section>
+
     <section class="section reveal" id="experience">
       <header class="section-header">
         <p class="kicker">// Journey</p>
         <h2>Experience</h2>
       </header>
       <article class="card">
-        <h3>Data Science Student</h3>
-        <p class="meta">Present</p>
+        <h3>IT Intern</h3>
+        <p class="meta">Canadian Mental Health Association • Oshawa, ON • May 2025 - Aug. 2025</p>
         <ul class="experience-list">
-          <li>Deep diving into advanced ML algorithms and large language model architectures.</li>
-          <li>Applying theory through practical open-source projects on GitHub and Kaggle.</li>
-          <li>Collaborating with peers on complex data engineering and modeling challenges.</li>
+          <li>Developed automated workflows and booking systems with Microsoft Power Apps and Power Automate.</li>
+          <li>Provided IT support and server maintenance for internal systems and clinical software.</li>
+          <li>Modernized legacy tools to improve data accessibility and user experience for 100+ employees.</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h3>Data Engineer (Volunteer)</h3>
+        <p class="meta">Statistics Without Borders • Remote • Feb. 2025</p>
+        <ul class="experience-list">
+          <li>Architected Azure cloud data pipelines for large-scale biodiversity datasets.</li>
+          <li>Improved cloud storage organization to reduce query latency and storage costs.</li>
+          <li>Collaborated with statisticians and scientists to align technical work with research standards.</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h3>Leadership & Community</h3>
+        <p class="meta">Ontario Tech Computer Science Club + Ontario Tech University</p>
+        <ul class="experience-list">
+          <li>Co-organized hackathons with 250+ participants as Events Coordinator.</li>
+          <li>Facilitated technical workshops and networking events for 30+ students.</li>
+          <li>Mentored 20 first-year students as a Peer Mentor and Orientation Leader.</li>
         </ul>
       </article>
     </section>
@@ -171,11 +206,11 @@ const skillGroups = [
       </header>
       <div class="card">
         <p>
-          I am open to internship opportunities, collaborations, and research-focused engineering
-          roles.
+          I am open to internship opportunities, data engineering projects, analytics work, and
+          research-focused collaborations.
         </p>
         <div class="actions">
-          <a class="btn btn-primary" href="mailto:hello@bach.dev">Email Me</a>
+          <a class="btn btn-primary" href="mailto:vubach.nguyen@ontariotechu.net">Email Me</a>
           <a class="btn btn-secondary" href={href('/Resume.pdf')} target="_blank" rel="noopener noreferrer">
             See My Resume
           </a>

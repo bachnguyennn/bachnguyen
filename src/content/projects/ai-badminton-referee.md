@@ -6,8 +6,8 @@ period: "2024 - 2025"
 domain: cv
 domainLabel: "Computer Vision"
 tags: ["Computer Vision", "YOLO", "Realtime"]
-featured: true
-order: 3
+featured: false
+order: 5
 github: "https://github.com/bach"
 ---
 

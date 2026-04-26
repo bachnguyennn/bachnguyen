@@ -6,8 +6,8 @@ period: "2025"
 domain: finance
 domainLabel: "Quant Finance"
 tags: ["Finance", "Options", "Dashboard"]
-featured: true
-order: 2
+featured: false
+order: 4
 github: "https://github.com/bach"
 ---
 
