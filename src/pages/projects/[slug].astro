@@ -1,0 +1,53 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { slug: project.id },
+  }));
+}
+
+const { slug } = Astro.props;
+const project = await getEntry('projects', slug);
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+const href = (path: string) => `${basePath}${path}`;
+
+if (!project) {
+  return Astro.redirect(href('/projects'));
+}
+
+const { Content } = await render(project);
+---
+
+<BaseLayout title={`${project.data.title} | Bach`} description={project.data.summary}>
+  <Header />
+  <main id="main-content" class="container list-page">
+    <p><a class="card-link" href={href('/projects')}>← Back to projects</a></p>
+    <article class="card project-card" data-domain={project.data.domain}>
+      <div class="project-card-head">
+        <h1>{project.data.title}</h1>
+        <span class="domain-badge">
+          {project.data.domainLabel ?? project.data.domain.toUpperCase()}
+        </span>
+      </div>
+      <p class="meta">{project.data.role} • {project.data.period}</p>
+      <div class="tags">
+        {project.data.tags.map((tag: string) => (
+          <span class="tag">{tag}</span>
+        ))}
+      </div>
+      <hr style="margin: 1.2rem 0; border: 0; border-top: 1px solid var(--line);" />
+      <Content />
+      <div class="actions" style="margin-top: 1.2rem;">
+        {project.data.github && <a class="btn btn-secondary" href={project.data.github} target="_blank" rel="noopener noreferrer">GitHub Repo</a>}
+        {project.data.demo && <a class="btn btn-secondary" href={project.data.demo} target="_blank" rel="noopener noreferrer">Live Demo</a>}
+      </div>
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,44 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { slug: post.id },
+  }));
+}
+
+const { slug } = Astro.props;
+const post = await getEntry('blog', slug);
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+const href = (path: string) => `${basePath}${path}`;
+
+if (!post || post.data.draft) {
+  return Astro.redirect(href('/blog'));
+}
+
+const { Content } = await render(post);
+---
+
+<BaseLayout title={`${post.data.title} | Bach`} description={post.data.description}>
+  <Header />
+  <main id="main-content" class="container list-page">
+    <p><a class="card-link" href={href('/blog')}>← Back to blog</a></p>
+    <article class="card">
+      <h1>{post.data.title}</h1>
+      <p class="meta">{post.data.pubDate.toLocaleDateString()}</p>
+      <div class="tags">
+        {post.data.tags.map((tag: string) => (
+          <span class="tag">{tag}</span>
+        ))}
+      </div>
+      <hr style="margin: 1.2rem 0; border: 0; border-top: 1px solid var(--line);" />
+      <Content />
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>

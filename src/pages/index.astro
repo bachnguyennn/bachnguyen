@@ -1,0 +1,190 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const projectEntries = await getCollection('projects');
+const featuredProjects = projectEntries
+  .filter((project) => project.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+
+const blogEntries = await getCollection('blog', ({ data }) => !data.draft);
+const latestPosts = blogEntries
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const dateFormatter = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+const href = (path: string) => `${basePath}${path}`;
+
+const skillGroups = [
+  { id: 'languages', label: 'Languages', items: ['Python', 'TypeScript', 'SQL', 'C++'] },
+  { id: 'ml', label: 'Machine Learning', items: ['PyTorch', 'scikit-learn', 'Hugging Face', 'XGBoost'] },
+  { id: 'data', label: 'Data', items: ['pandas', 'NumPy', 'PostgreSQL', 'DuckDB'] },
+  { id: 'tooling', label: 'Tooling', items: ['Git', 'Docker', 'GitHub Actions', 'AWS'] },
+];
+---
+
+<BaseLayout
+  title="Bach | Data Scientist"
+  description="Student data scientist building practical machine learning and analytics projects."
+>
+  <Header />
+  <main id="main-content" class="container">
+    <section class="hero" id="home">
+      <p class="kicker kicker-line">Student Data Scientist</p>
+      <div class="hero-intro">
+        <img class="profile-image" src={href('/profile.jpg')} alt="Portrait of Bach" />
+        <div class="hero-copy">
+          <h1>Hi, I&apos;m Bach</h1>
+          <p class="lead">
+            Add your short personal description here. This is placeholder text so you can quickly
+            update your introduction later.
+          </p>
+        </div>
+      </div>
+      <div class="actions">
+        <a class="btn btn-primary" href={href('/#projects')}>View Case Studies</a>
+        <a class="btn btn-secondary" href={href('/#contact')}>Get in Touch</a>
+      </div>
+      <div class="social" aria-label="Social links">
+        <a href="https://github.com/bach" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://linkedin.com/in/bach" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://kaggle.com/bach" target="_blank" rel="noopener noreferrer">Kaggle</a>
+      </div>
+    </section>
+
+    <section class="section reveal" id="about">
+      <header class="section-header">
+        <p class="kicker">// Background</p>
+        <h2>About</h2>
+      </header>
+      <div class="card">
+        <p>
+          I am a student data scientist passionate about machine learning, model optimization, and
+          translating technical findings into actionable strategy. My work combines research,
+          experimentation, and production-minded implementation.
+        </p>
+      </div>
+    </section>
+
+    <section class="section reveal" id="projects">
+      <header class="section-header">
+        <p class="kicker">// Work</p>
+        <h2>Featured Case Studies</h2>
+      </header>
+      <div class="grid grid-2">
+        {featuredProjects.map((project) => (
+          <article class="card project-card" data-domain={project.data.domain}>
+            <div class="project-card-head">
+              <h3>{project.data.title}</h3>
+              <span class="domain-badge">
+                {project.data.domainLabel ?? project.data.domain.toUpperCase()}
+              </span>
+            </div>
+            <p class="meta">{project.data.summary}</p>
+            <p class="meta">{project.data.role} • {project.data.period}</p>
+            <div class="tags">
+              {project.data.tags.map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+            <div class="project-actions">
+              <a href={href(`/projects/${project.id}`)} class="card-link">Read case study →</a>
+              {project.data.github && (
+                <a href={project.data.github} target="_blank" rel="noopener noreferrer">
+                  GitHub
+                </a>
+              )}
+              {project.data.demo && (
+                <a href={project.data.demo} target="_blank" rel="noopener noreferrer">
+                  Live Demo
+                </a>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+      <p><a class="card-link" href={href('/projects')}>See all projects →</a></p>
+    </section>
+
+    <section class="section reveal" id="skills">
+      <header class="section-header">
+        <p class="kicker">// Toolkit</p>
+        <h2>Skills</h2>
+      </header>
+      <div class="skills-grid">
+        {skillGroups.map((group) => (
+          <article class="card skill-card">
+            <h3>{group.label}</h3>
+            <div class="skill-list">
+              {group.items.map((item) => (
+                <span class="skill-chip">{item}</span>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section reveal" id="experience">
+      <header class="section-header">
+        <p class="kicker">// Journey</p>
+        <h2>Experience</h2>
+      </header>
+      <article class="card">
+        <h3>Data Science Student</h3>
+        <p class="meta">Present</p>
+        <ul class="experience-list">
+          <li>Deep diving into advanced ML algorithms and large language model architectures.</li>
+          <li>Applying theory through practical open-source projects on GitHub and Kaggle.</li>
+          <li>Collaborating with peers on complex data engineering and modeling challenges.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="section reveal" id="blog">
+      <header class="section-header">
+        <p class="kicker">// Writing</p>
+        <h2>Blog</h2>
+      </header>
+      <p class="meta">Latest writing from my blog.</p>
+      <div class="grid">
+        {latestPosts.map((post) => (
+          <article class="card">
+            <h3><a href={href(`/blog/${post.id}`)}>{post.data.title}</a></h3>
+            <p class="meta">{post.data.description}</p>
+            <p class="meta">{dateFormatter.format(post.data.pubDate)}</p>
+          </article>
+        ))}
+      </div>
+      <p><a class="card-link" href={href('/blog')}>Go to blog →</a></p>
+    </section>
+
+    <section class="section reveal" id="contact">
+      <header class="section-header">
+        <p class="kicker">// Connect</p>
+        <h2>Contact</h2>
+      </header>
+      <div class="card">
+        <p>
+          I am open to internship opportunities, collaborations, and research-focused engineering
+          roles.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="mailto:hello@bach.dev">Email Me</a>
+          <a class="btn btn-secondary" href={href('/Resume.pdf')} target="_blank" rel="noopener noreferrer">
+            See My Resume
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

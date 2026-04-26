@@ -1,0 +1,45 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const dateFormatter = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+const href = (path: string) => `${basePath}${path}`;
+---
+
+<BaseLayout title="Blog | Bach" description="Notes and lessons from machine learning projects.">
+  <Header />
+  <main id="main-content" class="container list-page">
+    <header class="section-header">
+      <p class="kicker">// Writing</p>
+      <h1>Blog</h1>
+      <p class="lead">Technical notes, project learnings, and practical lessons.</p>
+    </header>
+
+    <div class="grid">
+      {posts.map((post) => (
+        <article class="card reveal">
+          <h2><a href={href(`/blog/${post.id}`)}>{post.data.title}</a></h2>
+          <p class="meta">{post.data.description}</p>
+          <p class="meta">{dateFormatter.format(post.data.pubDate)}</p>
+          <div class="tags">
+            {post.data.tags.map((tag) => (
+              <span class="tag">{tag}</span>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
