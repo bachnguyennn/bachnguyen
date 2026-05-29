@@ -5,10 +5,12 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
 const projectEntries = await getCollection('projects');
+// Homepage shows 3 cards total: the hardcoded Nested Learning card + 2 featured.
+// The rest live on the /projects page via "See all projects".
 const featuredProjects = projectEntries
   .filter((project) => project.data.featured)
   .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 3);
+  .slice(0, 2);
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 const href = (path: string) => `${basePath}${path}`;
