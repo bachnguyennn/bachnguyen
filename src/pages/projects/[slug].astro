@@ -25,7 +25,7 @@ const { Content } = await render(project);
 ---
 
 <BaseLayout title={`${project.data.title} | Bach`} description={project.data.summary}>
-  <Header />
+  <Header projectsActive />
   <main id="main-content" class="container list-page">
     <p><a class="card-link" href={href('/projects')}>← Back to projects</a></p>
     <article class="card project-card" data-domain={project.data.domain}>

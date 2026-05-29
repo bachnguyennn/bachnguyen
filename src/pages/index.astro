@@ -14,16 +14,17 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 const href = (path: string) => `${basePath}${path}`;
 
 const skillGroups = [
+  { id: 'ml', label: 'Machine Learning & Research', items: ['PyTorch', 'Continual Learning', 'State-Space Models', 'Fast Linear Attention', 'Transfer Learning', 'SHAP', 'Optuna', 'Grad-CAM'] },
   { id: 'languages', label: 'Languages', items: ['Python', 'Java', 'C++', 'SQL', 'Bash', 'R'] },
   { id: 'data', label: 'Data Engineering & Analysis', items: ['ETL Pipelines', 'pandas', 'NumPy', 'scikit-learn', 'Matplotlib', 'Folium'] },
-  { id: 'tooling', label: 'Developer Tools', items: ['Azure Cloud', 'Docker', 'Apache Airflow', 'Power Apps', 'Power Automate', 'Jupyter'] },
+  { id: 'tooling', label: 'Developer Tools', items: ['Azure Cloud', 'Docker', 'Apache Airflow', 'Power Apps', 'Power Automate', 'Jupyter', 'Git', 'MPS (Apple Silicon)'] },
   { id: 'databases', label: 'Databases & Scraping', items: ['MySQL', 'SQLite', 'IBM DB2', 'BeautifulSoup', 'Web Scraping'] },
 ];
 ---
 
 <BaseLayout
   title="Bach | Data Scientist"
-  description="Bach Nguyen is an Integrated Mathematics and Computer Science student building data engineering, analytics, and machine learning projects."
+  description="Integrated Mathematics and Computer Science student at Ontario Tech University, specializing in neural architecture research, continual learning systems, and quantitative modelling."
 >
   <Header />
   <main id="main-content" class="container">
@@ -32,10 +33,11 @@ const skillGroups = [
         <img class="profile-image" src={href('/profile.jpg')} alt="Portrait of Bach" />
         <div class="hero-copy">
           <h1>Hi, I&apos;m Bach</h1>
-          <p class="kicker">Student Data Scientist</p>
+          <p class="kicker">ML Systems Engineer & Quant</p>
           <p class="lead">
-            Integrated Mathematics and Computer Science student at Ontario Tech University, focused
-            on data engineering, analytics, cloud workflows, and practical machine learning systems.
+            Integrated Mathematics and Computer Science student at Ontario Tech University,
+            specializing in neural architecture research, continual learning systems, and
+            quantitative modelling.
           </p>
         </div>
       </div>
@@ -71,6 +73,30 @@ const skillGroups = [
         <h2>Featured Projects</h2>
       </header>
       <div class="grid grid-2">
+        <article class="card project-card" data-domain="ml">
+          <div class="project-card-head">
+            <h3>Nested Learning Architecture</h3>
+            <span class="domain-badge">ML Systems Research</span>
+          </div>
+          <p class="meta">
+            A dual-stream continual learning architecture featuring fast-weight token-level updates
+            (cms_fast) and an O(1) memory vault (cms_ultra), with empirical ablation methodology on
+            WikiText-103. Designed around capabilities a vanilla transformer cannot replicate.
+          </p>
+          <p class="meta">Researcher & Builder • 2025–2026</p>
+          <div class="tags">
+            <span class="tag">PyTorch</span>
+            <span class="tag">Continual Learning</span>
+            <span class="tag">State-Space Models</span>
+            <span class="tag">Fast Weights</span>
+            <span class="tag">Ablation Study</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://github.com/bachnguyennn/nested_learning" target="_blank" rel="noopener noreferrer">
+              GitHub
+            </a>
+          </div>
+        </article>
         {featuredProjects.map((project) => (
           <article class="card project-card" data-domain={project.data.domain}>
             <div class="project-card-head">
@@ -178,8 +204,8 @@ const skillGroups = [
       </header>
       <div class="card">
         <p>
-          I am open to internship opportunities, data engineering projects, analytics work, and
-          research-focused collaborations.
+          I am open to ML research roles, quantitative internships, and technical collaborations in
+          machine learning systems or financial modelling.
         </p>
         <div class="actions">
           <a class="btn btn-primary" href="mailto:vubach.nguyen@ontariotechu.net">Email Me</a>

@@ -13,7 +13,7 @@ const href = (path: string) => `${basePath}${path}`;
   title="Projects | Bach"
   description="Case studies covering machine learning, finance analytics, and computer vision projects."
 >
-  <Header />
+  <Header projectsActive />
   <main id="main-content" class="container list-page">
     <header class="section-header">
       <p class="kicker">// Work</p>
@@ -22,6 +22,28 @@ const href = (path: string) => `${basePath}${path}`;
     </header>
 
     <div class="grid grid-2">
+      <article class="card project-card reveal" data-domain="ml">
+        <div class="project-card-head">
+          <h2>Nested Learning Architecture</h2>
+          <span class="domain-badge">ML Systems Research</span>
+        </div>
+        <p class="meta">
+          A dual-stream continual learning architecture featuring fast-weight token-level updates
+          (cms_fast) and an O(1) memory vault (cms_ultra), with empirical ablation methodology on
+          WikiText-103. Designed around capabilities a vanilla transformer cannot replicate.
+        </p>
+        <p class="meta">Researcher & Builder • 2025–2026</p>
+        <div class="tags">
+          <span class="tag">PyTorch</span>
+          <span class="tag">Continual Learning</span>
+          <span class="tag">State-Space Models</span>
+          <span class="tag">Fast Weights</span>
+          <span class="tag">Ablation Study</span>
+        </div>
+        <div class="project-actions">
+          <a href="https://github.com/bachnguyennn/nested_learning" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </article>
       {projects.map((project) => (
         <article class="card project-card reveal" data-domain={project.data.domain}>
           <div class="project-card-head">
