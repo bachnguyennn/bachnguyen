@@ -288,16 +288,7 @@ h1 {
   font-size: clamp(2.4rem, 6vw, 4.2rem);
   line-height: 1.05;
   font-weight: 600;
-  background-image: linear-gradient(
-    120deg,
-    var(--text) 0%,
-    var(--text) 55%,
-    var(--accent) 82%,
-    var(--domain-cv) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--text);
 }
 
 .hero {
