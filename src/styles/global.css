@@ -758,6 +758,51 @@ h1 {
   gap: 1.5rem;
 }
 
+.list-page article img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 1.4rem 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+}
+
+.list-page article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2rem 0;
+  font-size: 0.92rem;
+}
+
+.list-page article th,
+.list-page article td {
+  border: 1px solid var(--line);
+  padding: 0.5rem 0.7rem;
+  text-align: left;
+}
+
+.list-page article th {
+  background: var(--surface-muted);
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+
+.list-page article blockquote {
+  margin: 1.2rem 0;
+  padding: 0.6rem 1rem;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-soft);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  color: var(--text-muted);
+}
+
+.list-page article h2 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  margin: 1.8rem 0 0.4rem;
+}
+
 .reveal {
   opacity: 0;
   transform: translateY(14px);
