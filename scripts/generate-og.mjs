@@ -48,7 +48,7 @@ const svg = `
   <text x="90" y="558" font-family="Helvetica, Arial, sans-serif" font-size="26"
     font-weight="600" fill="#4b5468">Ontario Tech University</text>
   <text x="${W - 90}" y="558" text-anchor="end" font-family="Helvetica, Arial, sans-serif"
-    font-size="26" fill="#9aa3b2">bachnguyennn.github.io/bachnguyen</text>
+    font-size="26" fill="#9aa3b2">bachnguyennn.github.io</text>
 </svg>`;
 
 await sharp(Buffer.from(svg)).png().toFile('public/og-image.png');
