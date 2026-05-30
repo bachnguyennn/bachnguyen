@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#f7f8fb" />
-  <circle cx="1020" cy="120" r="260" fill="#3b5bdb" opacity="0.12" />
-  <circle cx="150" cy="540" r="220" fill="#0d9488" opacity="0.12" />
-  <text x="96" y="238" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="4" fill="#3b5bdb">STUDENT DATA SCIENTIST</text>
-  <text x="96" y="340" font-family="Georgia, serif" font-size="86" font-weight="700" fill="#0f172a">Hi, I'm Bach</text>
-  <text x="96" y="418" font-family="Inter, Arial, sans-serif" font-size="34" fill="#4b5468">Machine learning, analytics, and practical data products.</text>
-</svg>
