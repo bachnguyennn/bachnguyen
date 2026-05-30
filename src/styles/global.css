@@ -285,16 +285,16 @@ h3 {
 
 h1 {
   margin: 0;
-  font-size: clamp(2.4rem, 6vw, 4.2rem);
-  line-height: 1.05;
+  font-size: clamp(2.1rem, 4.6vw, 3.3rem);
+  line-height: 1.08;
   font-weight: 600;
   color: var(--text);
 }
 
 .hero {
   display: grid;
-  gap: 2rem;
-  padding-top: 1.5rem;
+  gap: 1.4rem;
+  padding-top: 0.5rem;
   justify-items: start;
   position: relative;
 }
@@ -302,21 +302,21 @@ h1 {
 .hero-intro {
   display: flex;
   align-items: center;
-  gap: 1.75rem;
+  gap: 1.6rem;
 }
 
 .hero-copy {
   display: grid;
-  gap: 1rem;
+  gap: 0.7rem;
 }
 
 .hero .kicker {
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   letter-spacing: 0.14em;
 }
 
 .hero .lead {
-  font-size: 1.18rem;
+  font-size: 1.05rem;
 }
 
 .kicker {
@@ -673,13 +673,14 @@ h1 {
 
 .skill-chip {
   background: var(--surface-muted);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   color: var(--text);
   border-radius: 999px;
-  padding: 0.3rem 0.8rem;
+  padding: 0.3rem 0.85rem;
   font-size: 0.85rem;
   font-weight: 500;
   font-family: var(--font-body);
+  box-shadow: var(--shadow-sm);
 }
 
 .social {
