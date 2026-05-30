@@ -1,6 +1,6 @@
 ---
 title: "Interpretable Chest X-Ray Pneumonia Detection"
-summary: "A ResNet50 transfer-learning classifier for pneumonia screening, with Grad-CAM and Eigen-CAM explainability and a deliberate high-recall tradeoff."
+summary: "A ResNet50 pneumonia screener tuned for 96.9% recall, with Grad-CAM overlays to show where it's looking."
 role: "Builder"
 period: "2025"
 domain: cv

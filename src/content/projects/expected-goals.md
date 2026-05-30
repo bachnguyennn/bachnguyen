@@ -1,6 +1,6 @@
 ---
 title: "Soccer xG → Value-Betting Engine"
-summary: "A calibrated Expected Goals model, Dixon-Coles forecaster, and Monte-Carlo match simulator, backtested against Pinnacle's closing line with bootstrap significance testing."
+summary: "An xG betting engine backtested against the market's closing line — honest enough to show its apparent edge is statistical noise."
 role: "Researcher & Builder"
 period: "2025"
 domain: finance

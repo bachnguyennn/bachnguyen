@@ -1,6 +1,6 @@
 ---
 title: "Hospital Readmission Prediction"
-summary: "A 30-day readmission classifier for diabetic patients with strict temporal validation, AUPRC-first evaluation under heavy class imbalance, and SHAP interpretability."
+summary: "30-day readmission prediction where the methodology is the point: leakage-free validation over a flattering number."
 role: "Builder"
 period: "2025"
 domain: ml

@@ -1,6 +1,6 @@
 ---
 title: "End-to-End Electricity Load Forecasting"
-summary: "Hourly electricity-demand forecasting on the PJM dataset, comparing Prophet, XGBoost, LSTM, and a Temporal Fusion Transformer under strict walk-forward validation."
+summary: "Four models compared for hourly electricity forecasting under walk-forward validation — XGBoost wins at 0.81% MAPE."
 role: "Builder"
 period: "2025"
 domain: ml

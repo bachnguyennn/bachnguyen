@@ -1,6 +1,6 @@
 ---
 title: "AstroLoc-ML — Deep-Learning Plate Solver"
-summary: "An end-to-end neural plate solver: synthetic star-field generation, sin/cos spherical regression, three-phase transfer learning, and an honest report on why the CNN loses to a classical solver."
+summary: "Can a CNN plate-solve the night sky from raw pixels? An honest end-to-end attempt — and why geometry beats deep learning here."
 role: "Researcher & Builder"
 period: "2025"
 domain: cv

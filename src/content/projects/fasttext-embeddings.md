@@ -1,6 +1,6 @@
 ---
 title: "FastText Subword Embeddings from Scratch"
-summary: "A from-scratch PyTorch implementation of Skip-Gram and FastText (character n-grams), trained on text8 and benchmarked against official FastText and GloVe with honest reporting."
+summary: "Word embeddings built from scratch to test whether subword n-grams beat Skip-Gram — they win on coverage and morphology."
 role: "Builder"
 period: "2025"
 domain: ml
