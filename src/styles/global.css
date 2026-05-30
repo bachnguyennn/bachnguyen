@@ -669,6 +669,8 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   gap: 0.55rem 0.6rem;
+  align-content: flex-start;
+  align-items: flex-start;
 }
 
 .skill-chip {
