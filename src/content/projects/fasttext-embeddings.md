@@ -11,6 +11,8 @@ order: 6
 github: "https://github.com/bachnguyennn/Fast-Text-Embedding-System"
 ---
 
+> **TL;DR —** Word embeddings built from scratch to test whether FastText's character n-grams beat plain Skip-Gram — they win on coverage and morphology, with an honest accounting of the gap to web-scale pretrained models.
+
 ## The question I wanted to answer
 
 Most people *use* word embeddings; far fewer can explain *why* they work. I wanted to close that gap for myself by building word vectors from absolute scratch — no `gensim.load()` — and answering a concrete question: **does FastText's big idea (breaking words into character n-grams) actually buy you anything over plain Skip-Gram, when both are trained under identical conditions?**

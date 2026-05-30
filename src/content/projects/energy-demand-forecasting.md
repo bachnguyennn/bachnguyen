@@ -11,6 +11,8 @@ order: 3
 github: "https://github.com/bachnguyennn/Energy-Demand-Prediction"
 ---
 
+> **TL;DR —** A four-model bake-off for hourly electricity forecasting; gradient-boosted trees on lag features win at 0.81% MAPE — exactly what the data's auto-regressive structure predicted.
+
 ## The question I wanted to answer
 
 Electricity can't be stored cheaply, so grid operators have to predict demand *before* it happens — a forecast that's off by a few percent means either wasted generation or a shortfall. I wanted to answer a practical question: **how accurately can I forecast hourly electricity demand a day ahead, and which modelling approach actually wins — a classic statistical model, gradient boosting, or deep learning?**

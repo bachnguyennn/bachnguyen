@@ -11,6 +11,8 @@ order: 2
 github: "https://github.com/bachnguyennn/Chest_X-Pneumonia-Detection"
 ---
 
+> **TL;DR —** A ResNet50 pneumonia screener tuned for 96.9% recall — catching almost every case — with Grad-CAM overlays so you can see it's looking at the lungs, not the labels.
+
 > For research and education only — not validated or intended for clinical diagnosis.
 
 ## The question I wanted to answer

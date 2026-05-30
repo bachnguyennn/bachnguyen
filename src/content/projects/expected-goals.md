@@ -11,6 +11,8 @@ order: 1
 github: "https://github.com/bachnguyennn/Expected-Goal-Prediction"
 ---
 
+> **TL;DR —** A calibrated xG + Dixon-Coles betting engine, backtested against the sharpest line in the market — proving with bootstrap significance that its apparent +5.7% edge is really just noise.
+
 ## The question I wanted to answer
 
 I wanted to know something specific and uncomfortable: **can a model I build actually beat the betting market — or do I just *think* it can?**

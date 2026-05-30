@@ -11,6 +11,8 @@ order: 4
 github: "https://github.com/bachnguyennn/Hospital_Readmission_prediction"
 ---
 
+> **TL;DR —** A 30-day readmission model where the methodology is the point: temporal validation, deduplication, and AUPRC-first scoring earn an honest 0.128 instead of a leaky, inflated number.
+
 ## The question I wanted to answer
 
 Hospital readmissions are expensive and often preventable. A 30-day readmission usually means something was missed at discharge — so hospitals have a real incentive to flag high-risk patients early. The question I set out to answer: **can I predict which diabetic patients will be readmitted within 30 days — and, just as importantly, can I do it in a way that wouldn't fall apart in the real world?**

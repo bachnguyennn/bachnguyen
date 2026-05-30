@@ -11,6 +11,8 @@ order: 5
 github: "https://github.com/bachnguyennn/astro-ml"
 ---
 
+> **TL;DR —** Can a CNN plate-solve the night sky from raw pixels? No — and the clean negative result shows exactly why geometric matching, not deep learning, is the right tool for the job.
+
 ## The question I wanted to answer
 
 "Plate solving" is the task of looking at a photo of the night sky and figuring out *exactly where the camera was pointing* — its right ascension, declination, rotation, and field of view. Classical solvers do this by matching star patterns. I wanted to ask a research question: **can a neural network learn to plate-solve end-to-end, straight from pixels — and if I'm honest about the results, what does that teach me about where deep learning helps and where it doesn't?**
