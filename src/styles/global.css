@@ -648,21 +648,41 @@ h1 {
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  align-items: start;
 }
 
 .skill-card {
-  padding: 1.25rem;
+  padding: 1.4rem 1.25rem 1.3rem;
   display: grid;
-  gap: 0.6rem;
+  gap: 0.8rem;
+}
+
+.skill-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--skill-accent, var(--accent));
 }
 
 .skill-card h3 {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   font-family: var(--font-body);
   font-size: 0.78rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--text-muted);
-  font-weight: 600;
+  color: var(--skill-accent, var(--text-muted));
+  font-weight: 700;
+}
+
+.skill-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 
 .skill-list {
