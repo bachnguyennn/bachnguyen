@@ -1,75 +1,91 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
 
-const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
-const href = (path: string) => `${basePath}${path}`;
+const href = (p: string) => `${basePath}${p}` || '/';
+
+const projects = (await getCollection('projects')).sort((a, b) => {
+  const ya = a.data.year ?? 0;
+  const yb = b.data.year ?? 0;
+  if (yb !== ya) return yb - ya;
+  return a.data.order - b.data.order;
+});
+
+const footMeta = `projects.ipynb · ${projects.length + 2} cells · kernel: python 3`;
 ---
 
 <BaseLayout
-  title="Projects | Bach"
-  description="Case studies covering machine learning, finance analytics, and computer vision projects."
+  title="Experiments — Bach Nguyen"
+  description="Every experiment in the notebook: applied ML, quant, NLP, and computer vision — each with an honest verdict."
+  footMeta={footMeta}
 >
-  <Header projectsActive />
-  <main id="main-content" class="container list-page">
-    <header class="section-header">
-      <p class="kicker">// Work</p>
+  <!-- intro -->
+  <section class="cell">
+    <div class="gutter">In [1]:</div>
+    <div class="body-cell md">
+      <p class="eyebrow">/projects</p>
       <h1>Projects</h1>
-      <p class="lead">A detailed look into selected technical work and outcomes.</p>
-    </header>
-
-    <div class="grid grid-2">
-      <article class="card project-card reveal" data-domain="ml">
-        <div class="project-card-head">
-          <h2>Nested Learning Architecture</h2>
-          <span class="domain-badge">ML Systems Research</span>
-        </div>
-        <p class="meta">
-          A dual-stream continual-learning architecture — fast-weight token updates plus an O(1)
-          memory vault — with empirical ablations on WikiText-103.
-        </p>
-        <p class="meta">Researcher & Builder • 2025–2026</p>
-        <div class="tags">
-          <span class="tag">PyTorch</span>
-          <span class="tag">Continual Learning</span>
-          <span class="tag">State-Space Models</span>
-          <span class="tag">Fast Weights</span>
-          <span class="tag">Ablation Study</span>
-        </div>
-        <div class="project-actions">
-          <a href="https://github.com/bachnguyennn/nested_learning" target="_blank" rel="noopener noreferrer">GitHub</a>
-        </div>
-      </article>
-      {projects.map((project) => (
-        <article class="card project-card reveal" data-domain={project.data.domain}>
-          <div class="project-card-head">
-            <h2><a href={href(`/projects/${project.id}`)}>{project.data.title}</a></h2>
-            <span class="domain-badge">
-              {project.data.domainLabel ?? project.data.domain.toUpperCase()}
-            </span>
-          </div>
-          <p class="meta">{project.data.summary}</p>
-          <p class="meta">{project.data.role} • {project.data.period}</p>
-          <div class="tags">
-            {project.data.tags.map((tag) => (
-              <span class="tag">{tag}</span>
-            ))}
-          </div>
-          <div class="project-actions">
-            <a href={href(`/projects/${project.id}`)} class="card-link">Read case study →</a>
-            {project.data.github && (
-              <a href={project.data.github} target="_blank" rel="noopener noreferrer">GitHub</a>
-            )}
-            {project.data.demo && (
-              <a href={project.data.demo} target="_blank" rel="noopener noreferrer">Live Demo</a>
-            )}
-          </div>
-        </article>
-      ))}
+      <p class="lead">Everything I've built, with the verdict attached. A common thread: I'd rather report an honest "no edge" or a leakage-free number than a flattering one that won't replicate.</p>
     </div>
-  </main>
-  <Footer />
+  </section>
+
+  <!-- df table -->
+  <section class="cell">
+    <div class="gutter">In [2]:</div>
+    <div class="body-cell code">projects = pd.<span class="fn">read_csv</span>(<span class="str">"projects.csv"</span>)<br />projects.<span class="fn">sort_values</span>(<span class="str">"year"</span>, ascending=<span class="kw">False</span>)</div>
+  </section>
+  <section class="cell">
+    <div class="gutter out">Out[2]:</div>
+    <div class="body-cell output" style="overflow-x:auto">
+      <table class="df">
+        <thead>
+          <tr><th></th><th>experiment</th><th>domain</th><th>year</th><th>headline</th><th>notebook</th></tr>
+        </thead>
+        <tbody>
+          {projects.map((p, i) => (
+            <tr>
+              <td class="idx">{i}</td>
+              <td>{p.data.experiment ?? p.id}</td>
+              <td class="tag">{p.data.domainTag ?? p.data.domain}</td>
+              <td>{p.data.year ?? p.data.period}</td>
+              <td>{p.data.headline ?? p.data.summary}</td>
+              <td>{p.data.notebook !== false ? <a href={href(`/projects/${p.id}`)}>✓ open</a> : '—'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p class="muted" style="font-family:var(--mono);font-size:.72rem;margin:.7rem 0 0">{projects.length} rows × 6 columns</p>
+    </div>
+  </section>
+
+  <!-- expanded cards -->
+  <div class="cell-label"># expanded — click through for the full write-up</div>
+  <section class="cell">
+    <div class="gutter">In [3]:</div>
+    <div class="body-cell">
+      {projects.map((p, i) => {
+        const hasNotebook = p.data.notebook !== false;
+        return (
+          <div style={i < projects.length - 1 ? 'padding-bottom:1.3rem;border-bottom:1px solid var(--line);margin-bottom:1.3rem' : ''}>
+            <p class="meta-tag">{p.data.domainLabel ?? p.data.domain} · {p.data.year ?? p.data.period}{p.data.featured ? ' · ★ featured' : ''}</p>
+            <h3>{p.data.title}</h3>
+            <p class="muted">{p.data.summary}</p>
+            <div class="chips">{p.data.tags.map((t, ti) => <span class={ti === 0 ? 'chip accent' : 'chip'}>{t}</span>)}</div>
+            <div class="btn-row">
+              {hasNotebook && <a class="btn primary" href={href(`/projects/${p.id}`)}>read notebook →</a>}
+              {p.data.github && <a class="btn" href={p.data.github} target="_blank" rel="noopener">github</a>}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="cell">
+    <div class="gutter blank">In [ ]:</div>
+    <div class="body-cell md">
+      <p class="muted">Want the short version? The <a href={href('/')}>README</a> has the highlights, or just <a href={href('/#contact')}>email me</a> and ask which one I'd actually want to talk about.</p>
+    </div>
+  </section>
 </BaseLayout>

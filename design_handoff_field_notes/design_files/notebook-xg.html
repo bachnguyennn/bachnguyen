@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Soccer xG → Value-Betting Engine — Bach Nguyen</title>
+<meta name="description" content="A calibrated xG + Dixon-Coles betting engine, backtested against Pinnacle's closing line — and reported honestly." />
+<link rel="stylesheet" href="notebook.css" />
+</head>
+<body>
+
+<header class="toolbar">
+  <div class="toolbar-inner">
+    <span class="kernel"><span class="dot"></span>bach&nbsp;<small>· python 3 · running…</small></span>
+    <nav class="nav">
+      <a href="index.html">README</a>
+      <a href="projects.html">projects</a>
+      <a href="experience.html">experience</a>
+      <a href="blog.html">writing</a>
+      <a href="index.html#contact">contact</a>
+    </nav>
+    <button class="theme-btn" data-theme-toggle aria-label="Toggle theme">
+      <svg class="ic sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>
+      <svg class="ic moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <span class="sun">light</span><span class="moon">dark</span>
+    </button>
+  </div>
+</header>
+
+<main class="notebook">
+
+  <!-- title -->
+  <section class="cell">
+    <div class="gutter">In [1]:</div>
+    <div class="body-cell md">
+      <p class="eyebrow">notebook · quant / sports analytics · 2025</p>
+      <h1>Soccer xG → Value-Betting Engine</h1>
+      <p class="lead">Can a model I build actually beat the betting market — or do I just <em>think</em> it can?</p>
+      <div class="chips"><span class="chip accent">XGBoost</span><span class="chip">Platt Calibration</span><span class="chip">Dixon-Coles</span><span class="chip">Walk-Forward Backtest</span><span class="chip">SHAP</span><span class="chip">Optuna</span></div>
+      <div class="btn-row"><a class="btn" href="https://github.com/bachnguyennn/Expected-Goal-Prediction" target="_blank" rel="noopener">github →</a><a class="btn" href="projects.html">← all projects</a></div>
+    </div>
+  </section>
+
+  <!-- TL;DR -->
+  <section class="cell">
+    <div class="gutter out">Out[1]:</div>
+    <div class="body-cell output">
+      <div class="callout">
+        <span class="label">TL;DR</span>
+        <p style="margin:.4rem 0 0">A calibrated xG + Dixon-Coles betting engine, backtested against the sharpest line in the market — proving with bootstrap significance that its apparent <b>+5.7%</b> edge is really just noise.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- the question -->
+  <div class="cell-label"># 01 — the question I wanted to answer</div>
+  <section class="cell">
+    <div class="gutter">In [2]:</div>
+    <div class="body-cell md">
+      <p>Anyone can fit a model to historical matches and print a profit on the sample they trained on. The real test in sports betting is the <strong>closing line</strong> — the final odds right before kickoff, after all the sharp money has moved them. Beating the close is the bar that separates a genuine edge from luck.</p>
+      <p>So I set the hardest possible target: build a full xG-driven betting engine and backtest it against <strong>Pinnacle's closing odds</strong>, the sharpest price in the market — and report the result honestly, even if the answer is "no."</p>
+    </div>
+  </section>
+
+  <!-- the data -->
+  <div class="cell-label"># 02 — getting to know the data</div>
+  <section class="cell">
+    <div class="gutter">In [3]:</div>
+    <div class="body-cell md">
+      <p>I worked with <strong>StatsBomb open shot data</strong> (every shot, with location and a freeze-frame of the defenders) for the shot model, and football-data.co.uk results + closing odds for <strong>760 La Liga matches</strong> across 2017–19.</p>
+      <p>Most shots are <em>bad</em> — the xG distribution is heavily skewed toward near-zero chances, with a long thin tail of genuine opportunities. That shape matters: a model that just predicts "low chance" for everything looks accurate but is useless. It told me early that <strong>calibration</strong>, not raw accuracy, had to be the goal.</p>
+    </div>
+  </section>
+  <section class="cell">
+    <div class="gutter out">Out[3]:</div>
+    <div class="body-cell output">
+      <div class="chart"><div data-chart="histogram"></div><div class="cap">fig 1 · distribution of predicted xG across all shots — heavily right-skewed</div></div>
+    </div>
+  </section>
+
+  <!-- approach -->
+  <div class="cell-label"># 03 — how I thought about it</div>
+  <section class="cell">
+    <div class="gutter">In [4]:</div>
+    <div class="body-cell md">
+      <p>I built the system in layers, each answering the previous layer's weakness:</p>
+      <ol class="pipeline">
+        <li><strong>Shot-level xG model</strong> — XGBoost on shot geometry + freeze-frame defensive context, run through <strong>Platt calibration</strong> so outputs are true probabilities (Brier 0.085 vs StatsBomb's 0.079).</li>
+        <li><strong>Pre-match forecaster</strong> — a Dixon-Coles model for each team's attack/defence strength + home advantage, re-fit every matchday on prior games only (no look-ahead).</li>
+        <li><strong>Match simulator</strong> — turns those strengths into the full joint distribution of scorelines.</li>
+        <li><strong>Betting layer</strong> — Expected Value + fractional Kelly staking on the simulated probabilities.</li>
+        <li><strong>Walk-forward backtest</strong> — the part that actually answers the question.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- calibration -->
+  <div class="cell-label"># 04 — what I found</div>
+  <section class="cell">
+    <div class="gutter">In [5]:</div>
+    <div class="body-cell md">
+      <p>First, the model is <strong>well-calibrated</strong> — predicted probabilities track reality closely, sitting right alongside the StatsBomb benchmark. The "0.15" really does mean "scores 15% of the time."</p>
+    </div>
+  </section>
+  <section class="cell">
+    <div class="gutter out">Out[5]:</div>
+    <div class="body-cell output">
+      <div class="chart"><div data-chart="calibration"></div><div class="cap">fig 2 · calibration curve vs the StatsBomb benchmark — close to the diagonal</div></div>
+    </div>
+  </section>
+
+  <!-- results table -->
+  <section class="cell">
+    <div class="gutter">In [6]:</div>
+    <div class="body-cell code">results = backtest.<span class="fn">run</span>(odds=<span class="str">"pinnacle_close"</span>, n_boot=<span class="num">10000</span>)<br/>results.<span class="fn">summary</span>()</div>
+  </section>
+  <section class="cell">
+    <div class="gutter out">Out[6]:</div>
+    <div class="body-cell output" style="overflow-x:auto">
+      <table class="df">
+        <thead><tr><th>metric</th><th>goals model</th><th>xg-proxy</th></tr></thead>
+        <tbody>
+          <tr><td>bets placed</td><td>1,379</td><td>1,636</td></tr>
+          <tr><td>level-stakes yield</td><td>+5.7%</td><td>+3.0%</td></tr>
+          <tr><td>yield 95% bootstrap CI</td><td class="tag">[−3.2%, +15.0%]</td><td class="tag">[−4.4%, +10.5%]</td></tr>
+          <tr><td>significant?</td><td><b style="color:var(--out)">No (p=0.11)</b></td><td><b style="color:var(--out)">No (p=0.22)</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="cell">
+    <div class="gutter out">Out[7]:</div>
+    <div class="body-cell output">
+      <div class="chart"><div data-chart="equity"></div><div class="cap">fig 3 · quarter-Kelly bankroll vs the closing line — note the swings</div></div>
+    </div>
+  </section>
+
+  <!-- honest verdict -->
+  <div class="cell-label"># 05 — the honest verdict</div>
+  <section class="cell">
+    <div class="gutter">In [8]:</div>
+    <div class="body-cell md">
+      <p>That +5.7% yield <em>looks</em> like a win — and here's the discipline that matters: a 10,000-sample bootstrap shows the confidence interval <strong>crosses zero</strong>. The "profit" is statistically indistinguishable from luck, and the model's match forecast is actually slightly <em>worse</em> than the market's (Brier 0.605 vs 0.584).</p>
+    </div>
+  </section>
+  <section class="cell">
+    <div class="gutter out">Out[8]:</div>
+    <div class="body-cell output">
+      <div class="verdict" style="font-size:.9rem">
+        <b>verdict:</b> No demonstrable edge against the close — <b>and that's the correct answer.</b> An efficient market <em>should</em> be hard to beat; proving that rigorously (closing-line benchmark, walk-forward validation, bootstrap significance) is far more valuable than a cherry-picked profit curve. The headline isn't the point estimate — it's whether you can tell signal from variance.
+      </div>
+      <p class="muted" style="font-family:var(--mono);font-size:.74rem;margin:1rem 0 0">stack: XGBoost · scikit-learn · SciPy · StatsBombPy · SHAP · Optuna · pytest (37 tests)</p>
+    </div>
+  </section>
+
+  <section class="cell">
+    <div class="gutter blank">In [ ]:</div>
+    <div class="body-cell md">
+      <div class="btn-row"><a class="btn primary" href="index.html#contact">talk to me about this →</a><a class="btn" href="https://github.com/bachnguyennn/Expected-Goal-Prediction" target="_blank" rel="noopener">read the code</a></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <span>xg-value-betting.ipynb · kernel: python 3 · 37 tests passing</span>
+  <span>built with too much coffee in Oshawa / Toronto</span>
+</footer>
+
+<script src="charts.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

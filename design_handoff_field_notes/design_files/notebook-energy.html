@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>End-to-End Electricity Load Forecasting — Bach Nguyen</title>
+<meta name="description" content="Four models compared for hourly electricity forecasting under walk-forward validation — XGBoost wins at 0.81% MAPE." />
+<link rel="stylesheet" href="notebook.css" />
+</head>
+<body>
+
+<header class="toolbar">
+  <div class="toolbar-inner">
+    <span class="kernel"><span class="dot"></span>bach&nbsp;<small>· python 3 · running…</small></span>
+    <nav class="nav">
+      <a href="index.html">README</a>
+      <a href="projects.html">projects</a>
+      <a href="experience.html">experience</a>
+      <a href="blog.html">writing</a>
+      <a href="index.html#contact">contact</a>
+    </nav>
+    <button class="theme-btn" data-theme-toggle aria-label="Toggle theme">
+      <svg class="ic sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>
+      <svg class="ic moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <span class="sun">light</span><span class="moon">dark</span>
+    </button>
+  </div>
+</header>
+
+<main class="notebook">
+
+  <section class="cell">
+    <div class="gutter">In [1]:</div>
+    <div class="body-cell md">
+      <p class="eyebrow">notebook · time-series ml · 2025</p>
+      <h1>End-to-End Electricity Load Forecasting</h1>
+      <p class="lead">How accurately can I forecast hourly demand a day ahead — and which approach actually wins?</p>
+      <div class="chips"><span class="chip accent">XGBoost</span><span class="chip">LSTM</span><span class="chip">Prophet</span><span class="chip">Temporal Fusion Transformer</span><span class="chip">SHAP</span></div>
+      <div class="btn-row"><a class="btn" href="https://github.com/bachnguyennn/Energy-Demand-Prediction" target="_blank" rel="noopener">github →</a><a class="btn" href="projects.html">← all projects</a></div>
+    </div>
+  </section>
+
+  <section class="cell">
+    <div class="gutter out">Out[1]:</div>
+    <div class="body-cell output">
+      <div class="callout">
+        <span class="label">TL;DR</span>
+        <p style="margin:.4rem 0 0">A four-model bake-off for hourly electricity forecasting; gradient-boosted trees on lag features win at <b>0.81% MAPE</b> — exactly what the data's auto-regressive structure predicted.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="cell-label"># 01 — the question I wanted to answer</div>
+  <section class="cell">
+    <div class="gutter">In [2]:</div>
+    <div class="body-cell md">
+      <p>Electricity can't be stored cheaply, so grid operators have to predict demand <em>before</em> it happens — a forecast off by a few percent means wasted generation or a shortfall. The practical question: <strong>how accurately can I forecast hourly demand a day ahead, and which model wins — a classic statistical model, gradient boosting, or deep learning?</strong></p>
+      <p>Rather than assume deep learning is best, I put four very different models on the <em>same</em> footing and let validation decide.</p>
+    </div>
+  </section>
+
+  <div class="cell-label"># 02 — getting to know the data</div>
+  <section class="cell">
+    <div class="gutter">In [3]:</div>
+    <div class="body-cell md">
+      <p>I used the <strong>PJM hourly consumption</strong> dataset. The structure of demand is striking and regular:</p>
+      <ul>
+        <li><strong>Strong daily &amp; weekly seasonality</strong> — demand rises and falls with the working day and dips on weekends.</li>
+        <li><strong>Intensely auto-regressive</strong> — this hour's load looks a lot like last hour's, with clear echoes at 24h and 168h.</li>
+      </ul>
+      <p>That basically wrote the feature engineering: <strong>lag features</strong> (1h, 24h, 168h), rolling statistics, and cyclical time encodings should carry most of the signal — with holiday flags for the irregular dips.</p>
+    </div>
+  </section>
+
+  <div class="cell-label"># 03 — how I thought about it</div>
+  <section class="cell">
+    <div class="gutter">In [4]:</div>
+    <div class="body-cell md">
+      <p>Two decisions mattered most:</p>
+      <ol class="pipeline">
+        <li><strong>Validation that can't cheat</strong> — a random split leaks the future into the past, so I used <strong>3-fold walk-forward validation</strong>: train on the past, test on the next 30 days, roll forward.</li>
+        <li><strong>A fair, diverse bake-off</strong> — Prophet (statistical baseline), XGBoost (boosted trees on lag features), LSTM (recurrent net), and a Temporal Fusion Transformer (modern multi-horizon deep model).</li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="cell-label"># 04 — what I found</div>
+  <section class="cell">
+    <div class="gutter">In [5]:</div>
+    <div class="body-cell code">leaderboard.<span class="fn">sort_values</span>(<span class="str">"MAPE"</span>)</div>
+  </section>
+  <section class="cell">
+    <div class="gutter out">Out[5]:</div>
+    <div class="body-cell output" style="overflow-x:auto">
+      <table class="df">
+        <thead><tr><th>model</th><th>MAE (MW)</th><th>MAPE</th></tr></thead>
+        <tbody>
+          <tr><td><b>XGBoost</b></td><td><b>125.09</b></td><td><b style="color:var(--c2)">0.81%</b></td></tr>
+          <tr><td>LSTM</td><td>170.69</td><td>1.11%</td></tr>
+          <tr><td>Temporal Fusion Transformer</td><td>896.78</td><td>5.53%</td></tr>
+          <tr><td>Prophet (baseline)</td><td>1,396.96</td><td>9.00%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="cell">
+    <div class="gutter out">Out[6]:</div>
+    <div class="body-cell output">
+      <div class="exp">
+        <div class="chart"><div data-chart="modelbars"></div><div class="cap">fig 1 · MAPE across all four models — boosted trees win decisively</div></div>
+        <div class="chart"><div data-chart="forecast"></div><div class="cap">fig 2 · XGBoost prediction vs actual load over one week</div></div>
+      </div>
+      <p style="margin:1rem 0 0">XGBoost lands at <strong>0.81% MAPE</strong> because <code class="inline">lag_1h</code> directly captures the auto-regressive structure. Prophet captures the broad shape but misses the sharp hourly turns; the TFT underfit on a deliberately short training budget — a reminder that a more powerful model isn't automatically a better one. A SHAP check confirmed the short-term lag features dominate.</p>
+    </div>
+  </section>
+
+  <div class="cell-label"># 05 — the honest verdict</div>
+  <section class="cell">
+    <div class="gutter out">Out[7]:</div>
+    <div class="body-cell output">
+      <div class="verdict" style="font-size:.9rem">
+        <b>verdict:</b> For this problem, <b>boosted trees on well-engineered lag features beat the fancier deep models</b> — and the EDA told me why before I trained anything. The biggest lever wasn't model choice, it was honest validation and features that respect the data's structure. Next step: folding in <b>weather data</b>, the obvious missing driver of demand.
+      </div>
+      <p class="muted" style="font-family:var(--mono);font-size:.74rem;margin:1rem 0 0">stack: XGBoost · PyTorch (LSTM) · PyTorch Forecasting (TFT) · Prophet · SHAP · pandas</p>
+    </div>
+  </section>
+
+  <section class="cell">
+    <div class="gutter blank">In [ ]:</div>
+    <div class="body-cell md">
+      <div class="btn-row"><a class="btn primary" href="index.html#contact">talk to me about this →</a><a class="btn" href="https://github.com/bachnguyennn/Energy-Demand-Prediction" target="_blank" rel="noopener">read the code</a></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <span>energy-load-forecast.ipynb · kernel: python 3</span>
+  <span>built with too much coffee in Oshawa / Toronto</span>
+</footer>
+
+<script src="charts.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

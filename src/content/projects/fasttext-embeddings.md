@@ -9,6 +9,10 @@ tags: ["PyTorch", "Word Embeddings", "Skip-Gram", "FastText", "t-SNE"]
 featured: false
 order: 6
 github: "https://github.com/bachnguyennn/Fast-Text-Embedding-System"
+experiment: "fasttext_embeddings"
+domainTag: "nlp"
+headline: "subword n-grams beat skip-gram"
+year: 2025
 ---
 
 > **TL;DR —** Word embeddings built from scratch to test whether FastText's character n-grams beat plain Skip-Gram — they win on coverage and morphology, with an honest accounting of the gap to web-scale pretrained models.

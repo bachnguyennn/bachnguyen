@@ -9,6 +9,10 @@ tags: ["XGBoost", "LSTM", "Prophet", "Temporal Fusion Transformer", "SHAP"]
 featured: true
 order: 3
 github: "https://github.com/bachnguyennn/Energy-Demand-Prediction"
+experiment: "energy_load_forecast"
+domainTag: "time-series"
+headline: "XGBoost wins at 0.81% MAPE"
+year: 2025
 ---
 
 > **TL;DR —** A four-model bake-off for hourly electricity forecasting; gradient-boosted trees on lag features win at 0.81% MAPE — exactly what the data's auto-regressive structure predicted.

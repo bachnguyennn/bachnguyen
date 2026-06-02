@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Interpretable Chest X-Ray Pneumonia Detection — Bach Nguyen</title>
+<meta name="description" content="A ResNet50 pneumonia screener tuned for 96.9% recall, with Grad-CAM overlays to show where it's looking." />
+<link rel="stylesheet" href="notebook.css" />
+</head>
+<body>
+
+<header class="toolbar">
+  <div class="toolbar-inner">
+    <span class="kernel"><span class="dot"></span>bach&nbsp;<small>· python 3 · running…</small></span>
+    <nav class="nav">
+      <a href="index.html">README</a>
+      <a href="projects.html">projects</a>
+      <a href="experience.html">experience</a>
+      <a href="blog.html">writing</a>
+      <a href="index.html#contact">contact</a>
+    </nav>
+    <button class="theme-btn" data-theme-toggle aria-label="Toggle theme">
+      <svg class="ic sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>
+      <svg class="ic moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <span class="sun">light</span><span class="moon">dark</span>
+    </button>
+  </div>
+</header>
+
+<main class="notebook">
+
+  <!-- title -->
+  <section class="cell">
+    <div class="gutter">In [1]:</div>
+    <div class="body-cell md">
+      <p class="eyebrow">notebook · medical computer vision · 2025</p>
+      <h1>Interpretable Chest X-Ray Pneumonia Detection</h1>
+      <p class="lead">If this were a real screening tool, what kind of mistake is acceptable?</p>
+      <div class="chips"><span class="chip accent">PyTorch</span><span class="chip">ResNet50</span><span class="chip">Transfer Learning</span><span class="chip">Grad-CAM</span><span class="chip">Explainability</span></div>
+      <div class="btn-row"><a class="btn" href="https://github.com/bachnguyennn/Chest_X-Pneumonia-Detection" target="_blank" rel="noopener">github →</a><a class="btn" href="projects.html">← all projects</a></div>
+    </div>
+  </section>
+
+  <!-- TL;DR -->
+  <section class="cell">
+    <div class="gutter out">Out[1]:</div>
+    <div class="body-cell output">
+      <div class="callout">
+        <span class="label">TL;DR</span>
+        <p style="margin:.4rem 0 0">A ResNet50 pneumonia screener tuned for <b>96.9% recall</b> — catching almost every case — with Grad-CAM overlays so you can see it's looking at the lungs, not the labels.</p>
+        <p class="muted" style="font-family:var(--mono);font-size:.72rem;margin:.6rem 0 0">⚠ for research &amp; education only — not validated or intended for clinical diagnosis.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- the question -->
+  <div class="cell-label"># 01 — the question I wanted to answer</div>
+  <section class="cell">
+    <div class="gutter">In [2]:</div>
+    <div class="body-cell md">
+      <p>I wanted to build a pneumonia screener for chest X-rays — but the framing I cared about wasn't "what's the highest accuracy?" In screening, a <strong>missed</strong> pneumonia case (false negative) is far more dangerous than a false alarm.</p>
+      <p>So the real question was: <em>can I build a model that catches almost every pneumonia case, stays honest about its false alarms, and can show me where it's looking so I can trust it?</em></p>
+    </div>
+  </section>
+
+  <!-- data -->
+  <div class="cell-label"># 02 — getting to know the data</div>
+  <section class="cell">
+    <div class="gutter">In [3]:</div>
+    <div class="body-cell md">
+      <p>The dataset is the Kaggle pediatric chest X-ray set (Guangzhou Women and Children's Medical Center). Two things jumped out:</p>
+      <ul>
+        <li><strong>It's imbalanced</strong> — far more pneumonia images than normal. A model that just guesses "pneumonia" scores deceptively well on accuracy, which ruled accuracy out as my headline metric.</li>
+        <li><strong>Images vary in contrast, positioning, and artifacts</strong> — the kind of thing that fools a model into learning a label in the corner instead of the lungs.</li>
+      </ul>
+      <p>That set the whole design: imbalance handling, a precision-recall view, and a way to <em>see what the model attends to.</em></p>
+    </div>
+  </section>
+
+  <!-- approach -->
+  <div class="cell-label"># 03 — how I thought about it</div>
+  <section class="cell">
+    <div class="gutter">In [4]:</div>
+    <div class="body-cell md">
+      <ol class="pipeline">
+        <li><strong>Backbone</strong> — ResNet50 with ImageNet transfer learning: strong features and a clean final conv block ideal for class-activation maps.</li>
+        <li><strong>Imbalance</strong> — weighted random sampling + weighted cross-entropy so the minority "normal" class isn't drowned out.</li>
+        <li><strong>Training</strong> — freeze backbone, train the head, then fine-tune later layers; save the best checkpoint by validation <strong>F1</strong>, not accuracy.</li>
+        <li><strong>The tradeoff, on purpose</strong> — tune toward high pneumonia recall, accepting more false positives. In screening that's the right error to make.</li>
+        <li><strong>Trust</strong> — Grad-CAM + Eigen-CAM overlays so every prediction comes with a visual of its evidence.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- results -->
+  <div class="cell-label"># 04 — what I found</div>
+  <section class="cell">
+    <div class="gutter">In [5]:</div>
+    <div class="body-cell code">metrics = evaluate(model, test_loader)<br/>metrics</div>
+  </section>
+  <section class="cell">
+    <div class="gutter out">Out[5]:</div>
+    <div class="body-cell output" style="overflow-x:auto">
+      <table class="df">
+        <thead><tr><th>metric</th><th>value</th></tr></thead>
+        <tbody>
+          <tr><td>accuracy</td><td>90.4%</td></tr>
+          <tr><td>roc-auc</td><td>96.5%</td></tr>
+          <tr><td>pr-auc</td><td>97.5%</td></tr>
+          <tr><td><b>pneumonia recall</b></td><td><b style="color:var(--c2)">96.9%</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="cell">
+    <div class="gutter out">Out[6]:</div>
+    <div class="body-cell output">
+      <div class="exp">
+        <div class="chart"><div data-chart="confusion"></div><div class="cap">fig 1 · confusion matrix — the tradeoff working as designed</div></div>
+        <div class="chart"><div data-chart="prcurve"></div><div class="cap">fig 2 · precision-recall curve (the honest view under imbalance)</div></div>
+      </div>
+      <p style="margin:1rem 0 0">The model catches <strong>96.9% of pneumonia cases</strong> — very few missed pneumonias (12), at the cost of more false alarms (48). Under class imbalance, the PR curve is the honest measure of ranking quality.</p>
+    </div>
+  </section>
+
+  <!-- grad-cam -->
+  <section class="cell">
+    <div class="gutter">In [7]:</div>
+    <div class="body-cell md">
+      <p>Then the part I care about most — <em>is it looking at the lungs, or cheating?</em> The Grad-CAM / Eigen-CAM overlays put the original X-ray next to gradient- and activation-based evidence maps.</p>
+    </div>
+  </section>
+  <section class="cell">
+    <div class="gutter out">Out[7]:</div>
+    <div class="body-cell output">
+      <div class="grid-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem">
+        <div class="avatar" style="width:100%;height:150px;border-radius:8px">x-ray.png<br/>original</div>
+        <div class="avatar" style="width:100%;height:150px;border-radius:8px">grad-cam.png<br/>gradient map</div>
+        <div class="avatar" style="width:100%;height:150px;border-radius:8px">eigen-cam.png<br/>activation map</div>
+      </div>
+      <p class="cap" style="font-family:var(--mono);font-size:.68rem;color:var(--faint);margin:.5rem 0 0;text-align:center">fig 3 · evidence maps — heat concentrates on lung fields, not borders</p>
+    </div>
+  </section>
+
+  <!-- verdict -->
+  <div class="cell-label"># 05 — the honest verdict</div>
+  <section class="cell">
+    <div class="gutter out">Out[8]:</div>
+    <div class="body-cell output">
+      <div class="verdict" style="font-size:.9rem">
+        <b>verdict:</b> The model does what a screener should — high sensitivity, with its reasoning on display. I documented the <b>failure cases</b> (12 false negatives, 48 false positives) because in medical AI those are the most important images to study. A strong research prototype, <b>not a clinical device</b> — and I'm explicit about that. The takeaway: defining the <em>right</em> error before training mattered more than any architecture choice.
+      </div>
+      <p class="muted" style="font-family:var(--mono);font-size:.74rem;margin:1rem 0 0">stack: PyTorch · torchvision · pytorch-grad-cam · scikit-learn · Gradio demo</p>
+    </div>
+  </section>
+
+  <section class="cell">
+    <div class="gutter blank">In [ ]:</div>
+    <div class="body-cell md">
+      <div class="btn-row"><a class="btn primary" href="index.html#contact">talk to me about this →</a><a class="btn" href="https://github.com/bachnguyennn/Chest_X-Pneumonia-Detection" target="_blank" rel="noopener">read the code</a></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <span>chest-xray-pneumonia.ipynb · kernel: python 3</span>
+  <span>built with too much coffee in Oshawa / Toronto</span>
+</footer>
+
+<script src="charts.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -9,6 +9,10 @@ tags: ["XGBoost", "Calibration", "Backtesting", "Dixon-Coles", "SHAP"]
 featured: true
 order: 1
 github: "https://github.com/bachnguyennn/Expected-Goal-Prediction"
+experiment: "xg_value_betting"
+domainTag: "quant"
+headline: "no edge vs the close (and that's right)"
+year: 2025
 ---
 
 > **TL;DR —** A calibrated xG + Dixon-Coles betting engine, backtested against the sharpest line in the market — proving with bootstrap significance that its apparent +5.7% edge is really just noise.

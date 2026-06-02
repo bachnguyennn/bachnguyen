@@ -9,6 +9,10 @@ tags: ["LightGBM", "XGBoost", "AUPRC", "Optuna", "SHAP"]
 featured: false
 order: 4
 github: "https://github.com/bachnguyennn/Hospital_Readmission_prediction"
+experiment: "hospital_readmission"
+domainTag: "clinical-ml"
+headline: "leakage-free > flattering AUC"
+year: 2025
 ---
 
 > **TL;DR —** A 30-day readmission model where the methodology is the point: temporal validation, deduplication, and AUPRC-first scoring earn an honest 0.128 instead of a leaky, inflated number.

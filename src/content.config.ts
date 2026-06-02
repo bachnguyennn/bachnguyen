@@ -28,6 +28,12 @@ const projects = defineCollection({
     order: z.number().default(0),
     github: z.url().optional(),
     demo: z.url().optional(),
+    // Field Notes additions
+    experiment: z.string().optional(), // snake_case name for the df table
+    domainTag: z.string().optional(), // short domain tag for the df table
+    headline: z.string().optional(), // one-line result for the df table
+    year: z.number().optional(),
+    notebook: z.boolean().default(true), // false = no case-study page
   }),
 });
 

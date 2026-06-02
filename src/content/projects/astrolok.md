@@ -9,6 +9,10 @@ tags: ["PyTorch", "EfficientNet", "Spherical Regression", "Synthetic Data"]
 featured: false
 order: 5
 github: "https://github.com/bachnguyennn/astro-ml"
+experiment: "astroloc_ml"
+domainTag: "cv"
+headline: "geometry beats deep learning here"
+year: 2025
 ---
 
 > **TL;DR —** Can a CNN plate-solve the night sky from raw pixels? No — and the clean negative result shows exactly why geometric matching, not deep learning, is the right tool for the job.

@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Experiments — Bach Nguyen</title>
+<meta name="description" content="Every experiment in the notebook: applied ML, quant, NLP, and computer vision — each with an honest verdict." />
+<link rel="stylesheet" href="notebook.css" />
+</head>
+<body>
+
+<header class="toolbar">
+  <div class="toolbar-inner">
+    <span class="kernel"><span class="dot"></span>bach&nbsp;<small>· python 3 · idle</small></span>
+    <nav class="nav">
+      <a href="index.html">README</a>
+      <a href="projects.html">projects</a>
+      <a href="experience.html">experience</a>
+      <a href="blog.html">writing</a>
+      <a href="index.html#contact">contact</a>
+    </nav>
+    <button class="theme-btn" data-theme-toggle aria-label="Toggle theme">
+      <svg class="ic sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>
+      <svg class="ic moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <span class="sun">light</span><span class="moon">dark</span>
+    </button>
+  </div>
+</header>
+
+<main class="notebook">
+
+  <!-- intro -->
+  <section class="cell">
+    <div class="gutter">In [1]:</div>
+    <div class="body-cell md">
+      <p class="eyebrow">/projects</p>
+      <h1>Projects</h1>
+      <p class="lead">Everything I've built, with the verdict attached. A common thread: I'd rather report an honest "no edge" or a leakage-free number than a flattering one that won't replicate.</p>
+    </div>
+  </section>
+
+  <!-- df table -->
+  <section class="cell">
+    <div class="gutter">In [2]:</div>
+    <div class="body-cell code">projects = pd.<span class="fn">read_csv</span>(<span class="str">"projects.csv"</span>)<br/>projects.<span class="fn">sort_values</span>(<span class="str">"year"</span>, ascending=<span class="kw">False</span>)</div>
+  </section>
+  <section class="cell">
+    <div class="gutter out">Out[2]:</div>
+    <div class="body-cell output" style="overflow-x:auto">
+      <table class="df">
+        <thead>
+          <tr><th></th><th>experiment</th><th>domain</th><th>year</th><th>headline</th><th>notebook</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="idx">0</td><td>nested_learning</td><td class="tag">ml-research</td><td>2026</td><td>+2.1 ppl from the memory vault</td><td>—</td></tr>
+          <tr><td class="idx">1</td><td>xg_value_betting</td><td class="tag">quant</td><td>2025</td><td>no edge vs the close (and that's right)</td><td><a href="notebook-xg.html">✓ open</a></td></tr>
+          <tr><td class="idx">2</td><td>energy_load_forecast</td><td class="tag">time-series</td><td>2025</td><td>XGBoost wins at 0.81% MAPE</td><td><a href="notebook-energy.html">✓ open</a></td></tr>
+          <tr><td class="idx">3</td><td>chest_xray_pneumonia</td><td class="tag">cv</td><td>2025</td><td>96.9% recall + Grad-CAM</td><td><a href="notebook-chest-xray.html">✓ open</a></td></tr>
+          <tr><td class="idx">4</td><td>hospital_readmission</td><td class="tag">clinical-ml</td><td>2025</td><td>leakage-free &gt; flattering AUC</td><td>—</td></tr>
+          <tr><td class="idx">5</td><td>fasttext_embeddings</td><td class="tag">nlp</td><td>2025</td><td>subword n-grams beat skip-gram</td><td>—</td></tr>
+          <tr><td class="idx">6</td><td>astroloc_ml</td><td class="tag">cv</td><td>2025</td><td>geometry beats deep learning here</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <p class="muted" style="font-family:var(--mono);font-size:.72rem;margin:.7rem 0 0">7 rows × 6 columns</p>
+    </div>
+  </section>
+
+  <!-- cards -->
+  <div class="cell-label"># expanded — click through for the full write-up</div>
+  <section class="cell">
+    <div class="gutter">In [3]:</div>
+    <div class="body-cell">
+
+      <!-- xG -->
+      <div style="padding-bottom:1.3rem;border-bottom:1px solid var(--line);margin-bottom:1.3rem">
+        <p class="meta-tag">quant / sports analytics · 2025 · ★ featured</p>
+        <h3>Soccer xG → Value-Betting Engine</h3>
+        <p class="muted">An xG betting engine backtested against the market's closing line — honest enough to show its apparent edge is statistical noise.</p>
+        <div class="chips"><span class="chip accent">XGBoost</span><span class="chip">Calibration</span><span class="chip">Backtesting</span><span class="chip">Dixon-Coles</span><span class="chip">SHAP</span></div>
+        <div class="btn-row"><a class="btn primary" href="notebook-xg.html">read notebook →</a><a class="btn" href="https://github.com/bachnguyennn/Expected-Goal-Prediction" target="_blank" rel="noopener">github</a></div>
+      </div>
+
+      <!-- nested learning -->
+      <div style="padding-bottom:1.3rem;border-bottom:1px solid var(--line);margin-bottom:1.3rem">
+        <p class="meta-tag">ml systems research · 2025–2026 · ★ featured</p>
+        <h3>Nested Learning Architecture</h3>
+        <p class="muted">A dual-stream continual-learning architecture — fast-weight token updates plus an O(1) memory vault — with empirical ablations on WikiText-103.</p>
+        <div class="chips"><span class="chip accent">PyTorch</span><span class="chip">Continual Learning</span><span class="chip">State-Space</span><span class="chip">Fast Weights</span><span class="chip">Ablation Study</span></div>
+        <div class="btn-row"><a class="btn" href="https://github.com/bachnguyennn/nested_learning" target="_blank" rel="noopener">github</a></div>
+      </div>
+
+      <!-- energy -->
+      <div style="padding-bottom:1.3rem;border-bottom:1px solid var(--line);margin-bottom:1.3rem">
+        <p class="meta-tag">time-series ml · 2025 · ★ featured</p>
+        <h3>End-to-End Electricity Load Forecasting</h3>
+        <p class="muted">Four models compared for hourly electricity forecasting under walk-forward validation — XGBoost wins at 0.81% MAPE.</p>
+        <div class="chips"><span class="chip accent">XGBoost</span><span class="chip">LSTM</span><span class="chip">Prophet</span><span class="chip">Temporal Fusion Transformer</span><span class="chip">SHAP</span></div>
+        <div class="btn-row"><a class="btn primary" href="notebook-energy.html">read notebook →</a><a class="btn" href="https://github.com/bachnguyennn/Energy-Demand-Prediction" target="_blank" rel="noopener">github</a></div>
+      </div>
+
+      <!-- chest xray -->
+      <div style="padding-bottom:1.3rem;border-bottom:1px solid var(--line);margin-bottom:1.3rem">
+        <p class="meta-tag">medical computer vision · 2025 · ★ featured</p>
+        <h3>Interpretable Chest X-Ray Pneumonia Detection</h3>
+        <p class="muted">A ResNet50 pneumonia screener tuned for 96.9% recall, with Grad-CAM overlays to show where it's looking.</p>
+        <div class="chips"><span class="chip accent">PyTorch</span><span class="chip">ResNet50</span><span class="chip">Transfer Learning</span><span class="chip">Grad-CAM</span><span class="chip">Explainability</span></div>
+        <div class="btn-row"><a class="btn primary" href="notebook-chest-xray.html">read notebook →</a><a class="btn" href="https://github.com/bachnguyennn/Chest_X-Pneumonia-Detection" target="_blank" rel="noopener">github</a></div>
+      </div>
+
+      <!-- hospital -->
+      <div style="padding-bottom:1.3rem;border-bottom:1px solid var(--line);margin-bottom:1.3rem">
+        <p class="meta-tag">clinical ml · 2025</p>
+        <h3>Hospital Readmission Prediction</h3>
+        <p class="muted">30-day readmission prediction where the methodology is the point: leakage-free validation over a flattering number.</p>
+        <div class="chips"><span class="chip accent">LightGBM</span><span class="chip">XGBoost</span><span class="chip">AUPRC</span><span class="chip">Optuna</span><span class="chip">SHAP</span></div>
+        <div class="btn-row"><a class="btn" href="https://github.com/bachnguyennn/Hospital_Readmission_prediction" target="_blank" rel="noopener">github</a></div>
+      </div>
+
+      <!-- fasttext -->
+      <div style="padding-bottom:1.3rem;border-bottom:1px solid var(--line);margin-bottom:1.3rem">
+        <p class="meta-tag">nlp / representation learning · 2025</p>
+        <h3>FastText Subword Embeddings from Scratch</h3>
+        <p class="muted">Word embeddings built from scratch to test whether subword n-grams beat Skip-Gram — they win on coverage and morphology.</p>
+        <div class="chips"><span class="chip accent">PyTorch</span><span class="chip">Word Embeddings</span><span class="chip">Skip-Gram</span><span class="chip">FastText</span><span class="chip">t-SNE</span></div>
+        <div class="btn-row"><a class="btn" href="https://github.com/bachnguyennn/Fast-Text-Embedding-System" target="_blank" rel="noopener">github</a></div>
+      </div>
+
+      <!-- astroloc -->
+      <div>
+        <p class="meta-tag">deep learning / astronomy · 2025</p>
+        <h3>AstroLoc-ML — Deep-Learning Plate Solver</h3>
+        <p class="muted">Can a CNN plate-solve the night sky from raw pixels? An honest end-to-end attempt — and why geometry beats deep learning here.</p>
+        <div class="chips"><span class="chip accent">PyTorch</span><span class="chip">EfficientNet</span><span class="chip">Spherical Regression</span><span class="chip">Synthetic Data</span></div>
+        <div class="btn-row"><a class="btn" href="https://github.com/bachnguyennn/astro-ml" target="_blank" rel="noopener">github</a></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="cell">
+    <div class="gutter blank">In [ ]:</div>
+    <div class="body-cell md">
+      <p class="muted">Want the short version? The <a href="index.html">README</a> has the highlights, or just <a href="index.html#contact">email me</a> and ask which one I'd actually want to talk about.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <span>projects.ipynb · 7 cells · kernel: python 3</span>
+  <span>built with too much coffee in Oshawa / Toronto</span>
+</footer>
+
+<script src="charts.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

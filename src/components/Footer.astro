@@ -1,15 +1,11 @@
 ---
-const year = new Date().getFullYear();
+interface Props {
+  meta?: string;
+}
+const { meta = 'bach-nguyen.ipynb · kernel: python 3' } = Astro.props;
 ---
 
-<footer class="site-footer">
-  <div class="container footer-inner">
-    <p>© {year} Bach Nguyen. Built with Astro.</p>
-    <div class="footer-social social" aria-label="Social links">
-      <a href="https://github.com/bachnguyennn" target="_blank" rel="noopener noreferrer">GitHub</a>
-      <a href="https://www.linkedin.com/in/bach-nguyen-0a50b028a/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      <a href="https://www.kaggle.com/nguyenvubach" target="_blank" rel="noopener noreferrer">Kaggle</a>
-      <a href="mailto:vubach.nguyen@ontariotechu.net">Email</a>
-    </div>
-  </div>
+<footer class="foot">
+  <span>{meta}</span>
+  <span>built with too much coffee in Oshawa / Toronto</span>
 </footer>

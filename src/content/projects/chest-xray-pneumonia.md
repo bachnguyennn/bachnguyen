@@ -9,6 +9,10 @@ tags: ["PyTorch", "ResNet50", "Transfer Learning", "Grad-CAM", "Explainability"]
 featured: true
 order: 2
 github: "https://github.com/bachnguyennn/Chest_X-Pneumonia-Detection"
+experiment: "chest_xray_pneumonia"
+domainTag: "cv"
+headline: "96.9% recall + Grad-CAM"
+year: 2025
 ---
 
 > **TL;DR —** A ResNet50 pneumonia screener tuned for 96.9% recall — catching almost every case — with Grad-CAM overlays so you can see it's looking at the lungs, not the labels.

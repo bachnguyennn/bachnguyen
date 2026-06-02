@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bach Nguyen — Field Notes</title>
+<meta name="description" content="Student data scientist at Ontario Tech. A notebook of experiments in applied ML, quant, and computer vision — with honest verdicts." />
+<link rel="stylesheet" href="notebook.css" />
+</head>
+<body>
+
+<!-- ===================== TOOLBAR ===================== -->
+<header class="toolbar">
+  <div class="toolbar-inner">
+    <span class="kernel"><span class="dot"></span>bach&nbsp;<small>· python 3 · idle</small></span>
+    <nav class="nav">
+      <a href="index.html">README</a>
+      <a href="projects.html">projects</a>
+      <a href="experience.html">experience</a>
+      <a href="blog.html">writing</a>
+      <a href="#contact">contact</a>
+    </nav>
+    <button class="theme-btn" data-theme-toggle aria-label="Toggle theme">
+      <svg class="ic sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>
+      <svg class="ic moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <span class="sun">light</span><span class="moon">dark</span>
+    </button>
+  </div>
+</header>
+
+<main class="notebook">
+
+  <!-- In [1]: hero -->
+  <section class="cell">
+    <div class="gutter">In [1]:</div>
+    <div class="body-cell">
+      <div class="hero-row">
+        <div class="avatar">profile.jpg<br/>128×128</div>
+        <div>
+          <p class="eyebrow">student data scientist · oshawa → toronto</p>
+          <h1>Bach Nguyen</h1>
+          <p class="lead">I build end-to-end ML — and I care most about the parts people skip: honest validation, calibration, and saying so when the model loses.</p>
+          <div class="handle">
+            <a href="https://github.com/bachnguyennn" target="_blank" rel="noopener">github/bachnguyennn</a>
+            <a href="https://www.linkedin.com/in/bach-nguyen-0a50b028a/" target="_blank" rel="noopener">linkedin</a>
+            <a href="https://kaggle.com/nguyenvubach" target="_blank" rel="noopener">kaggle</a>
+          </div>
+          <div class="btn-row">
+            <a class="btn primary" href="projects.html">▶ run projects</a>
+            <a class="btn" href="#contact">say hi</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- In [2]: README about -->
+  <div class="cell-label"># a short README, before the data</div>
+  <section class="cell">
+    <div class="gutter">In [2]:</div>
+    <div class="body-cell md">
+      <h2>About me</h2>
+      <p>I'm an Integrated Math &amp; Computer Science student at Ontario Tech, somewhere between a mathematician who likes proofs and an engineer who likes things that actually run. A blackboard in a film called <em>Good Will Hunting</em> is genuinely why I started studying math — I never quite got over it.</p>
+      <p>Most of my work lives in this notebook: applied ML, a bit of quant, some computer vision. The throughline is that I'd rather report an honest "no edge" than a pretty curve that doesn't replicate. Off the clock I'm watching Barça or Arsenal, replaying The Smiths, or losing to my friends in FC.</p>
+    </div>
+  </section>
+
+  <!-- In [3]: currently into -->
+  <section class="cell">
+    <div class="gutter">In [3]:</div>
+    <div class="body-cell code"><span class="cmt"># the non-technical context, for the humans reading this</span><br/><span class="fn">me</span>.currently()</div>
+  </section>
+  <section class="cell">
+    <div class="gutter out">Out[3]:</div>
+    <div class="body-cell output">
+      <div class="into-grid">
+        <div class="into"><div class="em">📖</div><div class="k">reading</div><div class="v">Gorky</div></div>
+        <div class="into"><div class="em">🎧</div><div class="k">on repeat</div><div class="v">The Smiths</div></div>
+        <div class="into"><div class="em">⚽</div><div class="k">forever</div><div class="v">Barça · Arsenal</div></div>
+        <div class="into"><div class="em">🎬</div><div class="k">comfort</div><div class="v">Good Will Hunting</div></div>
+        <div class="into"><div class="em">🎮</div><div class="k">unwinding</div><div class="v">FC · League</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- In [4]: featured experiments -->
+  <div class="cell-label"># featured projects — full write-ups under /projects</div>
+  <section class="cell">
+    <div class="gutter">In [4]:</div>
+    <div class="body-cell">
+      <div class="exp">
+        <div>
+          <p class="meta-tag">exp_01 · quant / sports analytics · 2025</p>
+          <h3>Soccer xG → Value-Betting Engine</h3>
+          <p class="muted">A calibrated xG + Dixon-Coles betting engine, backtested against Pinnacle's closing line — the sharpest price in the market.</p>
+          <div class="chips">
+            <span class="chip">XGBoost</span><span class="chip">Calibration</span><span class="chip">Backtesting</span><span class="chip">SHAP</span>
+          </div>
+          <div class="verdict"><b>out[ ]:</b> the +5.7% "edge" was statistical noise (95% CI crosses zero). No demonstrable edge vs the close — <b>and that's the correct answer.</b></div>
+          <div class="btn-row"><a class="btn" href="notebook-xg.html">read notebook →</a><a class="btn" href="https://github.com/bachnguyennn/Expected-Goal-Prediction" target="_blank" rel="noopener">github</a></div>
+        </div>
+        <div class="chart">
+          <div data-chart="equity"></div>
+          <div class="cap">fig 1 · quarter-Kelly bankroll vs the closing line</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cell">
+    <div class="gutter">In [5]:</div>
+    <div class="body-cell">
+      <div class="exp rev">
+        <div class="chart">
+          <div data-chart="loss"></div>
+          <div class="cap">fig 2 · train / val loss on WikiText-103</div>
+        </div>
+        <div>
+          <p class="meta-tag">exp_02 · ml systems research · 2025–2026</p>
+          <h3>Nested Learning Architecture</h3>
+          <p class="muted">A dual-stream continual-learning architecture — fast-weight token updates plus an O(1) memory vault — with empirical ablations.</p>
+          <div class="chips">
+            <span class="chip">PyTorch</span><span class="chip">Continual Learning</span><span class="chip">State-Space</span><span class="chip">Fast Weights</span>
+          </div>
+          <div class="verdict"><b>out[ ]:</b> the memory vault recovers <b>+2.1 ppl</b> over the fast-weight baseline on held-out continuation — ablations isolate where it helps.</div>
+          <div class="btn-row"><a class="btn" href="https://github.com/bachnguyennn/nested_learning" target="_blank" rel="noopener">github →</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- In [6]: toolkit -->
+  <div class="cell-label"># the toolkit</div>
+  <section class="cell">
+    <div class="gutter">In [6]:</div>
+    <div class="body-cell code"><span class="kw">from</span> bach <span class="kw">import</span> toolkit<br/>toolkit.<span class="fn">groups</span>()</div>
+  </section>
+  <section class="cell">
+    <div class="gutter out">Out[6]:</div>
+    <div class="body-cell output">
+      <p class="eyebrow" style="color:var(--out)">machine learning &amp; research</p>
+      <div class="chips"><span class="chip accent">PyTorch</span><span class="chip accent">Continual Learning</span><span class="chip accent">State-Space Models</span><span class="chip accent">Transfer Learning</span><span class="chip accent">SHAP</span><span class="chip accent">Optuna</span><span class="chip accent">Grad-CAM</span></div>
+      <p class="eyebrow" style="color:var(--out);margin-top:1rem">languages</p>
+      <div class="chips"><span class="chip">Python</span><span class="chip">Java</span><span class="chip">C++</span><span class="chip">SQL</span><span class="chip">Bash</span><span class="chip">R</span></div>
+      <p class="eyebrow" style="color:var(--out);margin-top:1rem">data engineering &amp; tooling</p>
+      <div class="chips"><span class="chip">pandas</span><span class="chip">NumPy</span><span class="chip">scikit-learn</span><span class="chip">ETL / Airflow</span><span class="chip">Azure</span><span class="chip">Docker</span><span class="chip">Git</span><span class="chip">MySQL</span></div>
+    </div>
+  </section>
+
+  <!-- In [7]: playful xG of my week -->
+  <div class="cell-label"># and because not everything needs to be serious</div>
+  <section class="cell">
+    <div class="gutter">In [7]:</div>
+    <div class="body-cell code"><span class="cmt"># a model with absolutely no business existing</span><br/>plt.<span class="fn">bar</span>(week, <span class="fn">predict_joy</span>(week))</div>
+  </section>
+  <section class="cell">
+    <div class="gutter out">Out[7]:</div>
+    <div class="body-cell output">
+      <div class="chart" style="border:none;box-shadow:none;background:transparent;padding:0">
+        <div data-chart="week"></div>
+        <div class="cap">fig 3 · "xG of my week" — calibration pending. derby day remains an outlier.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- In [8]: contact -->
+  <div class="cell-label" id="contact"># contact</div>
+  <section class="cell">
+    <div class="gutter">In [8]:</div>
+    <div class="body-cell">
+      <div class="callout">
+        <span class="label">OPEN TO</span>
+        <h3 style="margin:.3rem 0 .4rem">Let's talk models, markets, or football.</h3>
+        <p class="muted" style="margin-bottom:.9rem">I'm looking for data science, ML / data engineering, and quant internships — and I'm always happy to chat with peers about a project. Genuinely, just say hi.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="mailto:vubach.nguyen@ontariotechu.net">✉ email me</a>
+          <a class="btn" href="Resume.pdf" target="_blank" rel="noopener">résumé.pdf</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <span>bach-nguyen.ipynb · last run {{today}} · kernel: python 3</span>
+  <span>built with too much coffee in <a href="#">Oshawa / Toronto</a></span>
+</footer>
+
+<script src="charts.js"></script>
+<script src="app.js"></script>
+<script>
+  document.querySelector('.foot').firstElementChild.innerHTML =
+    'bach-nguyen.ipynb · last run ' + new Date().toISOString().slice(0,10) + ' · kernel: python 3';
+</script>
+</body>
+</html>
