@@ -28,7 +28,7 @@ const footMeta = `bach-nguyen.ipynb · last run ${today} · kernel: python 3`;
 ---
 
 <BaseLayout
-  title="Bach Nguyen — Field Notes"
+  title="Bach Nguyen"
   description="Student data scientist at Ontario Tech. A notebook of experiments in applied ML, quant, and computer vision — with honest verdicts."
   footMeta={footMeta}
 >
@@ -36,21 +36,23 @@ const footMeta = `bach-nguyen.ipynb · last run ${today} · kernel: python 3`;
   <section class="cell">
     <div class="gutter">In [1]:</div>
     <div class="body-cell">
-      <div class="hero-row">
-        <div class="avatar"><img src={asset('profile.jpg')} alt="Bach Nguyen" width="92" height="92" /></div>
-        <div>
-          <p class="eyebrow">student data scientist · toronto</p>
-          <h1>Bach Nguyen</h1>
-          <p class="lead">I build end-to-end ML and I care most about the parts people skip: honest validation, calibration, and saying so when the model loses.</p>
-          <div class="handle">
-            <a href="https://github.com/bachnguyennn" target="_blank" rel="noopener">github/bachnguyennn</a>
-            <a href="https://www.linkedin.com/in/bach-nguyen-0a50b028a/" target="_blank" rel="noopener">linkedin</a>
-            <a href="https://kaggle.com/nguyenvubach" target="_blank" rel="noopener">kaggle</a>
+      <div class="hero">
+        <div class="name-row">
+          <div class="avatar avatar-sm"><img src={asset('profile.jpg')} alt="Bach Nguyen" width="72" height="72" /></div>
+          <div class="name-copy">
+            <p class="eyebrow">student data scientist · toronto</p>
+            <h1>Bach Nguyen</h1>
           </div>
-          <div class="btn-row">
-            <a class="btn primary" href={href('/projects')}>▶ run projects</a>
-            <a class="btn" href="#contact">say hi</a>
-          </div>
+        </div>
+        <p class="lead">I build end-to-end ML and I care most about the parts people skip: honest validation, calibration, and saying so when the model loses.</p>
+        <div class="handle">
+          <a href="https://github.com/bachnguyennn" target="_blank" rel="noopener">github/bachnguyennn</a>
+          <a href="https://www.linkedin.com/in/bach-nguyen-0a50b028a/" target="_blank" rel="noopener">linkedin</a>
+          <a href="https://kaggle.com/nguyenvubach" target="_blank" rel="noopener">kaggle</a>
+        </div>
+        <div class="btn-row">
+          <a class="btn primary" href={href('/projects')}>▶ run projects</a>
+          <a class="btn" href="#contact">say hi</a>
         </div>
       </div>
     </div>
