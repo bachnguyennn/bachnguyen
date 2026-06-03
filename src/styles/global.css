@@ -213,12 +213,12 @@ code.inline {
 /* ---------------- hero ---------------- */
 .hero-row { display: flex; gap: 1.6rem; align-items: center; }
 .avatar {
-  width: 92px; height: 92px; border-radius: 14px; flex-shrink: 0;
-  background:
-    repeating-linear-gradient(45deg, var(--cell-code), var(--cell-code) 8px, var(--line) 8px, var(--line) 9px);
+  width: 96px; height: 96px; border-radius: 16px; flex-shrink: 0;
+  background: var(--cell);
   border: 1px solid var(--line-2);
+  padding: 3px;
+  box-shadow: 0 0 0 4px var(--accent-soft), var(--shadow-sm);
   display: grid; place-items: center;
-  font-family: var(--mono); font-size: .6rem; color: var(--faint); text-align: center;
   overflow: hidden;
 }
 .handle {
@@ -383,8 +383,8 @@ code.inline {
    inside .body-cell.md, mobile menu, skip link
    ============================================================ */
 
-/* real profile image fills the avatar slot */
-.avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* real profile image fills the avatar slot, inside a thin mat */
+.avatar img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 12px; }
 
 /* markdown content from content collections, rendered inside a cell */
 .md-content > :first-child { margin-top: 0; }

@@ -13,7 +13,6 @@ const rel = basePath && path.startsWith(basePath) ? path.slice(basePath.length) 
 const isHome = rel === '/';
 const isProjects = rel === '/projects' || rel.startsWith('/projects/');
 const isExperience = rel === '/experience';
-const isWriting = rel === '/blog' || rel.startsWith('/blog/');
 ---
 
 <header class="toolbar">
@@ -23,7 +22,6 @@ const isWriting = rel === '/blog' || rel.startsWith('/blog/');
       <a href={href('/')} class={isHome ? 'active' : ''}>README</a>
       <a href={href('/projects')} class={isProjects ? 'active' : ''}>projects</a>
       <a href={href('/experience')} class={isExperience ? 'active' : ''}>experience</a>
-      <a href={href('/blog')} class={isWriting ? 'active' : ''}>writing</a>
       <a href={href('/#contact')}>contact</a>
     </nav>
     <button class="menu-btn" type="button" data-menu-toggle aria-label="Toggle menu">
