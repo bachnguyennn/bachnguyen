@@ -462,3 +462,24 @@ code.inline {
   z-index: 100;
 }
 .skip-link:focus { top: .5rem; }
+
+/* ---------------- brand logo (theme-aware inline SVG fills) ---------------- */
+.logo-ink { fill: var(--ink); }
+.logo-accent { fill: var(--accent); }
+.logo-muted { fill: var(--muted); }
+
+.brand { display: inline-flex; align-items: center; flex-shrink: 0; }
+.brand:hover { text-decoration: none; }
+.brand-mark { display: block; height: 32px; width: auto; transition: transform .15s ease; }
+.brand:hover .brand-mark { transform: translateY(-1px); }
+
+.foot-brand { display: inline-flex; align-items: center; }
+.foot-brand:hover { text-decoration: none; opacity: .85; }
+.brand-lockup { display: block; height: 42px; width: auto; }
+.foot-lines { display: flex; flex-direction: column; gap: .25rem; text-align: right; }
+.foot { align-items: center; }
+
+@media (max-width: 560px) {
+  .foot { flex-direction: column; align-items: flex-start; }
+  .foot-lines { text-align: left; }
+}

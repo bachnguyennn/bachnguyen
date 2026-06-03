@@ -17,6 +17,12 @@ const isExperience = rel === '/experience';
 
 <header class="toolbar">
   <div class="toolbar-inner">
+    <a class="brand" href={href('/')} aria-label="Bach Nguyen — home">
+      <svg class="brand-mark" width="42" height="32" viewBox="0 0 64 48" aria-hidden="true">
+        <text x="22" y="36" class="logo-ink" font-family="Newsreader, Georgia, serif" font-size="40" font-weight="600" text-anchor="middle">B</text>
+        <text x="39" y="42" class="logo-accent" font-family="Newsreader, Georgia, serif" font-size="20" font-weight="600" text-anchor="middle">n</text>
+      </svg>
+    </a>
     <span class="kernel"><span class="dot"></span>bach&nbsp;<small>· python 3 · {kernel}</small></span>
     <nav class="nav" data-nav aria-label="Primary">
       <a href={href('/')} class={isHome ? 'active' : ''}>README</a>
