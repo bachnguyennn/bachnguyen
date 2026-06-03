@@ -35,6 +35,9 @@ const imageURL = new URL(image, Astro.site ?? canonicalURL).toString();
 
     <link rel="canonical" href={canonicalURL.toString()} />
     <link rel="icon" href={`${basePath}favicon.svg`} type="image/svg+xml" />
+    <link rel="icon" type="image/png" sizes="32x32" href={`${basePath}favicon-32.png`} />
+    <link rel="icon" type="image/png" sizes="192x192" href={`${basePath}favicon-192.png`} />
+    <link rel="apple-touch-icon" href={`${basePath}apple-touch-icon.png`} />
 
     <title>{title}</title>
 
